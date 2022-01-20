@@ -1,4 +1,4 @@
-package com.paymybuddy.security;
+package com.paymybuddy.security.model;
 
 import java.util.Arrays;
 import java.util.Collection;

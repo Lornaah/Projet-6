@@ -15,8 +15,16 @@ public class User {
 	private int id;
 	private String mailAddress;
 	private String password;
-	private boolean active;
-	private String roles;
+	private boolean active = true;
+	private String roles = "USER";
+
+	public User() {
+	}
+
+	public User(String mailAddress, String password) {
+		this.mailAddress = mailAddress;
+		this.password = password;
+	}
 
 	public int getId() {
 		return id;
@@ -30,8 +38,8 @@ public class User {
 		return mailAddress;
 	}
 
-	public void setUserName(String userName) {
-		this.mailAddress = userName;
+	public void setMailAddress(String mailAddress) {
+		this.mailAddress = mailAddress;
 	}
 
 	public String getPassword() {
