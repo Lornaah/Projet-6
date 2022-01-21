@@ -21,6 +21,12 @@ public class User {
 	public User() {
 	}
 
+	public User(String mailAddress, String password, boolean active) {
+		this.mailAddress = mailAddress;
+		this.password = password;
+		this.active = active;
+	}
+
 	public User(String mailAddress, String password) {
 		this.mailAddress = mailAddress;
 		this.password = password;
@@ -64,6 +70,12 @@ public class User {
 
 	public void setRoles(String roles) {
 		this.roles = roles;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", mailAddress=" + mailAddress + ", password=" + password + ", active=" + active
+				+ ", roles=" + roles + "]";
 	}
 
 }

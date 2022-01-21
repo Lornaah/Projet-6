@@ -15,7 +15,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Override
 	public String registerUser(RegistrationRequest request) {
 		User user = new User(request.getMailAddress(), request.getPassword());
-		if (userService.alreadyRegistered(user)) {
+		if (userService.alreadyRegistered(request.getMailAddress())) {
 			throw new IllegalStateException("Mail is already used");
 		}
 		return userService.createUser(user);
