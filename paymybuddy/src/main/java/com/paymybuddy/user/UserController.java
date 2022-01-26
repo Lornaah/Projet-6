@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paymybuddy.registration.RegistrationRequest;
+import com.paymybuddy.user.service.UserService;
 
 @RestController
 public class UserController {

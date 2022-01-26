@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.paymybuddy.models.User;
+import com.paymybuddy.user.models.User;
 
 public class UserDetailsImpl implements UserDetails {
 

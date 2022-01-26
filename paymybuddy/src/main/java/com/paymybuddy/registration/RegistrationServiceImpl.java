@@ -3,8 +3,8 @@ package com.paymybuddy.registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.paymybuddy.models.User;
-import com.paymybuddy.user.UserService;
+import com.paymybuddy.user.models.User;
+import com.paymybuddy.user.service.UserService;
 
 @Service
 public class RegistrationServiceImpl implements RegistrationService {

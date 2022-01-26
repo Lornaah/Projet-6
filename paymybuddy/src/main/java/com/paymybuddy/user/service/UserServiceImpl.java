@@ -1,4 +1,4 @@
-package com.paymybuddy.user;
+package com.paymybuddy.user.service;
 
 import java.util.Optional;
 
@@ -8,10 +8,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.paymybuddy.models.User;
 import com.paymybuddy.registration.RegistrationRequest;
 import com.paymybuddy.security.model.UserDetailsImpl;
-import com.paymybuddy.security.repository.UserRepository;
+import com.paymybuddy.user.UpdateRequest;
+import com.paymybuddy.user.models.User;
+import com.paymybuddy.user.repository.UserRepository;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -76,5 +77,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		}
 
 		return Optional.empty();
+	}
+
+	public Optional<User> getUserByID(int ID) {
+		return userRepository.findById(ID);
+
 	}
 }

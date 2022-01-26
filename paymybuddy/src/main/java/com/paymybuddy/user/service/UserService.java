@@ -1,9 +1,10 @@
-package com.paymybuddy.user;
+package com.paymybuddy.user.service;
 
 import java.util.Optional;
 
-import com.paymybuddy.models.User;
 import com.paymybuddy.registration.RegistrationRequest;
+import com.paymybuddy.user.UpdateRequest;
+import com.paymybuddy.user.models.User;
 
 public interface UserService {
 
@@ -16,4 +17,6 @@ public interface UserService {
 	public String updateUser(UpdateRequest request);
 
 	public Optional<User> getUser(UpdateRequest request);
+
+	public Optional<User> getUserByID(int ID);
 }

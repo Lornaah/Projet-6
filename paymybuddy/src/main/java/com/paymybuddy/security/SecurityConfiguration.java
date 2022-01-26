@@ -23,9 +23,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests()
-				.antMatchers("/newUser", "/deleteAccount", "/updateAccount", "/myAccount").permitAll().anyRequest()
-				.authenticated().and().formLogin();
+		http.csrf().disable().authorizeRequests().antMatchers("/newUser", "/deleteAccount", "/updateAccount",
+				"/myAccount", "/createTransfer", "/myTransfer").permitAll().anyRequest().authenticated().and()
+				.formLogin();
 	}
 
 	@Bean

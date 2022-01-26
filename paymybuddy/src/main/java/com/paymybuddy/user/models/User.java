@@ -1,10 +1,13 @@
-package com.paymybuddy.models;
+package com.paymybuddy.user.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.paymybuddy.transfer.model.Wallet;
 
 @Entity
 @Table(name = "User")
@@ -17,6 +20,8 @@ public class User {
 	private String password;
 	private boolean active = true;
 	private String roles = "USER";
+	@OneToOne
+	private Wallet wallet;
 
 	public User() {
 	}
@@ -76,6 +81,14 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", mailAddress=" + mailAddress + ", password=" + password + ", active=" + active
 				+ ", roles=" + roles + "]";
+	}
+
+	public Wallet getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(Wallet wallet) {
+		this.wallet = wallet;
 	}
 
 }

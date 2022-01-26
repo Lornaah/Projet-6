@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.paymybuddy.models.User;
 import com.paymybuddy.registration.RegistrationRequest;
-import com.paymybuddy.security.repository.UserRepository;
 import com.paymybuddy.user.UpdateRequest;
-import com.paymybuddy.user.UserService;
+import com.paymybuddy.user.models.User;
+import com.paymybuddy.user.repository.UserRepository;
+import com.paymybuddy.user.service.UserService;
 
 @SpringBootTest
 public class UserServiceTest {
@@ -33,12 +33,24 @@ public class UserServiceTest {
 	}
 
 	@Test
+	public void createUser() {
+		// Arrange
+		User user;
+
+		// Act
+		user = newUser();
+
+		// Assert
+		assertTrue(userService.alreadyRegistered(user.getMailAddress()));
+
+	}
+
+	@Test
 	public void deleteUser() {
 
 		// Arrange
-		User user = new User("test", "test");
+		User user = newUser();
 		RegistrationRequest request = new RegistrationRequest(user.getMailAddress(), user.getPassword());
-		userService.createUser(user);
 		assertTrue(userService.alreadyRegistered(user.getMailAddress()));
 
 		// Act
@@ -53,9 +65,8 @@ public class UserServiceTest {
 	public void updateUser() {
 
 		// Arrange
-		User user = new User("test", "test");
+		User user = newUser();
 		UpdateRequest request = new UpdateRequest(user.getMailAddress(), "test2", true);
-		userService.createUser(user);
 
 		// Act
 		userService.updateUser(request);
@@ -68,8 +79,7 @@ public class UserServiceTest {
 	public void getUser() {
 
 		// Arrange
-		User user = new User("test", "test");
-		userService.createUser(user);
+		User user = newUser();
 		UpdateRequest request = new UpdateRequest(user.getMailAddress(), user.getPassword(), user.isActive());
 
 		// Act
@@ -80,6 +90,12 @@ public class UserServiceTest {
 		assertTrue(userOpt.get().getMailAddress().equals(user.getMailAddress()));
 		assertTrue(userOpt.get().getPassword().equals(user.getPassword()));
 
+	}
+
+	public User newUser() {
+		User user = new User("test", "test");
+		userService.createUser(user);
+		return user;
 	}
 
 }
