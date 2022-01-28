@@ -2,12 +2,13 @@ package com.paymybuddy.transfer.service;
 
 import java.util.Optional;
 
-import com.paymybuddy.transfer.TransferRequest;
-import com.paymybuddy.transfer.TransferResponseDTO;
+import com.paymybuddy.transfer.model.Transfer;
+import com.paymybuddy.transfer.transferDTO.TransferRequest;
+import com.paymybuddy.transfer.transferDTO.TransferResponseDTO;
 
 public interface TransferService {
 
-	public String createTransfer(TransferRequest transfer);
+	public Transfer createTransfer(TransferRequest transfer);
 
 	public Optional<TransferResponseDTO> getTransfer(int ID);
 }

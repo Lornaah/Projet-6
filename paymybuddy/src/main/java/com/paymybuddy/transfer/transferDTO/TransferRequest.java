@@ -1,4 +1,4 @@
-package com.paymybuddy.transfer;
+package com.paymybuddy.transfer.transferDTO;
 
 import java.util.Objects;
 

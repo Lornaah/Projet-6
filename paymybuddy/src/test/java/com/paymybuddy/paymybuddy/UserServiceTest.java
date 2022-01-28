@@ -41,7 +41,7 @@ public class UserServiceTest {
 		user = newUser();
 
 		// Assert
-		assertTrue(userService.alreadyRegistered(user.getMailAddress()));
+		assertTrue(user != null);
 
 	}
 
@@ -94,8 +94,7 @@ public class UserServiceTest {
 
 	public User newUser() {
 		User user = new User("test", "test");
-		userService.createUser(user);
-		return user;
+		return userService.createUser(user);
 	}
 
 }

@@ -5,10 +5,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.paymybuddy.transfer.TransferRequest;
-import com.paymybuddy.transfer.TransferResponseDTO;
 import com.paymybuddy.transfer.model.Transfer;
 import com.paymybuddy.transfer.repository.TransferRepository;
+import com.paymybuddy.transfer.transferDTO.TransferRequest;
+import com.paymybuddy.transfer.transferDTO.TransferResponseDTO;
 import com.paymybuddy.user.models.User;
 import com.paymybuddy.user.service.UserService;
 
@@ -22,7 +22,7 @@ public class TransferServiceImpl implements TransferService {
 	UserService userService;
 
 	@Override
-	public String createTransfer(TransferRequest transferRequest) {
+	public Transfer createTransfer(TransferRequest transferRequest) {
 
 		Optional<User> userReceive = userService.getUserByID(transferRequest.getUserReveiveID());
 		Optional<User> userSend = userService.getUserByID(transferRequest.getUserSendID());
@@ -30,8 +30,8 @@ public class TransferServiceImpl implements TransferService {
 		if (userReceive.isEmpty() || (userSend.isEmpty())) {
 			throw new IllegalStateException("One of the user doesn't exist");
 		}
-		Transfer transfer = new Transfer(userReceive.get(), userSend.get(), transferRequest.getAmount());
-		return transferRepository.save(transfer).toString();
+		Transfer transfer = new Transfer(userSend.get(), userReceive.get(), transferRequest.getAmount());
+		return transferRepository.save(transfer);
 
 	}
 

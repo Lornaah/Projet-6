@@ -8,7 +8,7 @@ import com.paymybuddy.user.models.User;
 
 public interface UserService {
 
-	public String createUser(User user);
+	public User createUser(User user);
 
 	public boolean alreadyRegistered(String mailAddress);
 

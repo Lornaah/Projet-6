@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.paymybuddy.user.models.User;
 import com.paymybuddy.user.service.UserService;
+import com.paymybuddy.wallet.service.WalletService;
 
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
@@ -12,12 +13,18 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private WalletService walletService;
+
 	@Override
-	public String registerUser(RegistrationRequest request) {
+	public User registerUser(RegistrationRequest request) {
 		User user = new User(request.getMailAddress(), request.getPassword());
 		if (userService.alreadyRegistered(request.getMailAddress())) {
 			throw new IllegalStateException("Mail is already used");
 		}
+
+		user.setWallet(walletService.createWallet(user));
+
 		return userService.createUser(user);
 	}
 

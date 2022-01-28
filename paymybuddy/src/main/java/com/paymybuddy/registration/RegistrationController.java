@@ -18,7 +18,7 @@ public class RegistrationController {
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public String create(@RequestBody RegistrationRequest request) {
-		return registrationService.registerUser(request);
+		return registrationService.registerUser(request).toString() + " created";
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.paymybuddy.transfer;
+package com.paymybuddy.transfer.transferDTO;
 
 import com.paymybuddy.transfer.model.Transfer;
 

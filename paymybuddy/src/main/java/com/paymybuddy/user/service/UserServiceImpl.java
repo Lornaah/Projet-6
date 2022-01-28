@@ -30,9 +30,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public String createUser(User user) {
-		userRepository.save(user);
-		return "User created";
+	public User createUser(User user) {
+		return userRepository.save(user);
 	}
 
 	@Override

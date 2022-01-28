@@ -33,6 +33,10 @@ public class Transfer {
 		computeTaxAmount();
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	public User getUserSend() {
 		return userSend;
 	}

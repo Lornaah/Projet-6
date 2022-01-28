@@ -1,6 +1,8 @@
 package com.paymybuddy.registration;
 
+import com.paymybuddy.user.models.User;
+
 public interface RegistrationService {
 
-	public String registerUser(RegistrationRequest request);
+	public User registerUser(RegistrationRequest request);
 }

@@ -1,13 +1,15 @@
 package com.paymybuddy.user.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.paymybuddy.transfer.model.Wallet;
+import com.paymybuddy.wallet.model.Wallet;
 
 @Entity
 @Table(name = "User")
@@ -20,7 +22,8 @@ public class User {
 	private String password;
 	private boolean active = true;
 	private String roles = "USER";
-	@OneToOne
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	private Wallet wallet;
 
 	public User() {
