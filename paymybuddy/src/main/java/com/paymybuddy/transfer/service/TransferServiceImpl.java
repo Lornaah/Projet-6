@@ -11,6 +11,8 @@ import com.paymybuddy.transfer.transferDTO.TransferRequest;
 import com.paymybuddy.transfer.transferDTO.TransferResponseDTO;
 import com.paymybuddy.user.models.User;
 import com.paymybuddy.user.service.UserService;
+import com.paymybuddy.wallet.ManageFoundsDTO;
+import com.paymybuddy.wallet.service.WalletService;
 
 @Service("transferService")
 public class TransferServiceImpl implements TransferService {
@@ -21,8 +23,11 @@ public class TransferServiceImpl implements TransferService {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	WalletService walletService;
+
 	@Override
-	public Transfer createTransfer(TransferRequest transferRequest) {
+	public TransferResponseDTO createTransfer(TransferRequest transferRequest) {
 
 		Optional<User> userReceive = userService.getUserByID(transferRequest.getUserReveiveID());
 		Optional<User> userSend = userService.getUserByID(transferRequest.getUserSendID());
@@ -31,8 +36,33 @@ public class TransferServiceImpl implements TransferService {
 			throw new IllegalStateException("One of the user doesn't exist");
 		}
 		Transfer transfer = new Transfer(userSend.get(), userReceive.get(), transferRequest.getAmount());
-		return transferRepository.save(transfer);
 
+		validateTransfer(transfer);
+		sendMoney(transfer);
+		receiveMoney(transfer);
+
+		TransferResponseDTO transferDTO = new TransferResponseDTO(transferRepository.save(transfer));
+		return transferDTO;
+
+	}
+
+	private void validateTransfer(Transfer transfer) {
+		if (transfer.getUserSend().getWallet().getFounds() < transfer.getAmount())
+			throw new IllegalStateException("Not enough founds on the account");
+		if (!transfer.getUserSend().isActive() || !transfer.getUserReveive().isActive())
+			throw new IllegalStateException("One of the user isn't active anymore");
+	}
+
+	private void receiveMoney(Transfer transfer) {
+		ManageFoundsDTO manageFoundsReceive = new ManageFoundsDTO(transfer.getUserReveive().getId(),
+				transfer.getAmount());
+		walletService.addFounds(manageFoundsReceive);
+	}
+
+	private void sendMoney(Transfer transfer) {
+		ManageFoundsDTO manageFoundsSend = new ManageFoundsDTO(transfer.getUserSend().getId(),
+				transfer.getTaxedAmount());
+		walletService.removeFounds(manageFoundsSend);
 	}
 
 	@Override

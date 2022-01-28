@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.paymybuddy.transfer.model.Transfer;
 import com.paymybuddy.transfer.repository.TransferRepository;
 import com.paymybuddy.transfer.service.TransferService;
 import com.paymybuddy.transfer.transferDTO.TransferRequest;
@@ -48,7 +47,7 @@ public class TransferServiceTest {
 		TransferRequest transferRequest = new TransferRequest(userSend.getId(), userReceive.getId(), 100);
 
 		// Act
-		Transfer transfer = transferService.createTransfer(transferRequest);
+		TransferResponseDTO transfer = transferService.createTransfer(transferRequest);
 
 		// Assert
 		assertTrue(transfer != null);
@@ -59,10 +58,10 @@ public class TransferServiceTest {
 
 		// Arrange
 		TransferRequest transferRequest = new TransferRequest(userSend.getId(), userReceive.getId(), 100);
-		Transfer transfer = transferService.createTransfer(transferRequest);
+		TransferResponseDTO transfer = transferService.createTransfer(transferRequest);
 
 		// Act
-		Optional<TransferResponseDTO> transferOpt = transferService.getTransfer(transfer.getId());
+		Optional<TransferResponseDTO> transferOpt = transferService.getTransfer(transfer.getID());
 
 		// Assert
 		assertTrue(transferOpt.isPresent());

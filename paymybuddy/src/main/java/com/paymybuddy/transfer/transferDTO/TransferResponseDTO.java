@@ -4,6 +4,7 @@ import com.paymybuddy.transfer.model.Transfer;
 
 public class TransferResponseDTO {
 
+	private int ID;
 	private TransferUserDTO userSend;
 	private TransferUserDTO userReceive;
 	private float amount;
@@ -14,6 +15,11 @@ public class TransferResponseDTO {
 		this.userReceive = new TransferUserDTO(transfer.getUserReveive());
 		this.amount = transfer.getAmount();
 		this.taxedAmount = transfer.getTaxedAmount();
+		this.ID = transfer.getId();
+	}
+
+	public int getID() {
+		return ID;
 	}
 
 	public TransferUserDTO getUserSend() {

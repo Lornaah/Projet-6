@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.paymybuddy.transfer.model.Transfer;
 import com.paymybuddy.transfer.service.TransferService;
 import com.paymybuddy.transfer.transferDTO.TransferRequest;
 import com.paymybuddy.transfer.transferDTO.TransferResponseDTO;
@@ -23,7 +22,7 @@ public class TransferController {
 
 	@PostMapping("/createTransfer")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public Transfer create(@RequestBody TransferRequest transfer) {
+	public TransferResponseDTO create(@RequestBody TransferRequest transfer) {
 		return transferService.createTransfer(transfer);
 	}
 
