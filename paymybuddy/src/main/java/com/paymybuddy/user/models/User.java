@@ -21,6 +21,8 @@ public class User {
 	private String mailAddress;
 	private String password;
 	private boolean active = true;
+	private String firstName;
+	private String lastName;
 	private String roles = "USER";
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
@@ -38,6 +40,22 @@ public class User {
 	public User(String mailAddress, String password) {
 		this.mailAddress = mailAddress;
 		this.password = password;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public int getId() {
@@ -83,7 +101,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", mailAddress=" + mailAddress + ", password=" + password + ", active=" + active
-				+ ", roles=" + roles + "]";
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", roles=" + roles + "]";
 	}
 
 	public Wallet getWallet() {

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.88.1">
+  <title>Pay My Buddy</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
+
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+  <main>
+    <nav class="py-2 head border-bottom px-5">
+      <div class="d-flex flex-wrap headerbar fs-5 mx-5">
+        <ul class="nav me-auto">
+
+          <button class="btn btn-logo btn-primary btn-lg " type="button">Pay My Buddy</button>
+        </ul>
+        <ul class="nav">
+          <li class="nav-item"><a th:href="@{/transfer}" class="nav-link px-2">Home</a></li>
+          <li class="nav-item"><a th:href="@{/transfer}" class="nav-link px-2 active" aria-current="page">Transfer</a></li>
+          <li class="nav-item"><a th:href="@{/profile}" class="nav-link px-2">Profile</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2">Contact</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2">Log off</a></li>
+        </ul>
+      </div>
+    </nav>
+    
+    <header class="py-3 mb-4 border-bottom bg-light px-5 fs-4">
+      <div class="d-flex flex-wrap mx-5 justify-content-between">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Transfer</li>
+          </ol>
+        </nav>
+
+        <div class="wallet">
+            <span class="breadcrumb-item">My wallet : </span>
+            <span> 0$ </span>
+        </div>
+
+      </div>
+    </header>
+
+    <div class="container body pt-1">
+      
+
+      <div class="bloc1">
+        <div class="section1 d-flex justify-content-between">
+          <h1 class="display-6 col-sm-6"> Send Money</h1>
+          <button class="btn btn-secondary btn-lg col-sm-3" type="button">Add Connection</button>
+          <button class="btn btn-secondary btn-lg col-sm-2 " type="button" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">Add Money</button> 
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class=" modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select an amount</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p class="display-6 fs-4">Select an amount to add to your wallet</p>
+                <div class="input-group">
+                <input type="number" class="form-control fs-5 text-center" placeholder="Enter An Amount" min="10"
+                    max="100" step="10" required value="number">
+                  <span class="input-group-text">€</span>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add Money</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section2 bg-light p-5">
+          <div class="container-fluid px-4">
+            <div class="row justify-content-between g-4 section2 bg-light">
+              <div class="col-5 col-sm-5">
+
+                <select class="form-select form-select-lg text-center" aria-label=".form-select-lg example">
+                  <option selected>Select A Connection</option>
+                  <option value="1">People 1</option>
+                  <option value="2">People 2</option>
+                  <option value="3">People 3</option>
+                </select>
+              </div>
+
+              <div class="col-4 col-sm-4 d-grid">
+                <div class="input-group">
+                  <input type="number" class="form-control fs-5 text-center" placeholder="Enter An Amount" min="10"
+                    max="100" step="10" required value="number">
+                  <span class="input-group-text">€</span>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2 col-3 col-sm-3 mx-auto">
+                <button class="btn btn-primary btn-lg" type="button">Pay</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bloc2 my-4">
+        <div class="myTransactions">
+          <h1 class="display-6"> My Transactions</h1>
+          <div class="bd-example">
+            <table class="table table-striped table-responsive table-borderless text-center fs-5">
+              <thead>
+                <tr class="table-primary text-light">
+                  <th scope="col">Connections</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>FirstName LastName</td>
+                  <td>01/01/2022</td>
+                  <td>15$</td>
+                </tr>
+                <tr>
+                  <td>FirstName LastName</td>
+                  <td>01/01/2022</td>
+                  <td>15$</td>
+                </tr>
+                <tr>
+                  <td>FirstName LastName</td>
+                  <td>01/01/2022</td>
+                  <td>15$</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </main>
+
+  <script src="/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+
+
+</html>

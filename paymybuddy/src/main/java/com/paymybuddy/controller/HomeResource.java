@@ -1,19 +1,29 @@
 package com.paymybuddy.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class HomeResource {
+
+	@GetMapping("/transfer")
+	public String transfer() {
+		return "transfer";
+	}
 
 	@GetMapping("/")
 	public String home() {
-		return ("<h1>Welcome</h1>");
+		return "transfer";
 	}
 
-	@GetMapping("/user")
+	@GetMapping("/log")
 	public String user() {
-		return ("<h1>Welcome User</h1>");
+		return "log";
+	}
+
+	@GetMapping("/profile")
+	public String profile() {
+		return "profile";
 	}
 
 }

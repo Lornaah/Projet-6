@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Pay My Buddy</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
+
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+    <main>
+        <nav class="py-2 head border-bottom px-5">
+            <div class="d-flex flex-wrap headerbar fs-5 mx-5">
+                <ul class="nav me-auto">
+
+                    <button class="btn btn-logo btn-primary btn-lg " type="button">Pay My Buddy</button>
+                </ul>
+                <ul class="nav">
+                    <li class="nav-item"><a th:href="@{/transfer}" class="nav-link px-2">Home</a></li>
+                    <li class="nav-item"><a th:href="@{/transfer}" class="nav-link px-2">Transfer</a></li>
+                    <li class="nav-item"><a th:href="@{/profile}" class="nav-link px-2  active" aria-current="page">Profile</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2">Contact</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2">Log off</a></li>
+                </ul>
+            </div>
+        </nav>
+        <header class="py-3 mb-4 border-bottom bg-light px-5 fs-4">
+            <div class="d-flex flex-wrap mx-5">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                    </ol>
+                </nav>
+            </div>
+        </header>
+
+        <div class="container body">
+            <div class="bloc1">
+                <article class="my-3" id="floating-labels">
+                    <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+                        <h1 class="display-6 fs-2"> General Informations</h1>
+                    </div>
+            </div>
+            <div>
+                <div class="section2 bg-light p-5 ">
+                    <div class="container-fluid px-4 ">
+                        <div class="row justify-content-between g-4 section2 bg-light">
+                            <div class="col-6 col-sm-6">
+                                <form>
+                                    <div class="form-floating mb-3 form-select-lg text-center fs-4">
+                                        <input type="text" class="form-control fs-5" id="floatingInput" disabled
+                                            value="User1" placeholder="name@example.com">
+                                        <label for="floatingInput">First Name</label>
+                                    </div>
+                                    <div class="form-floating form-select-lg text-center fs-4">
+                                        <input type="text" class="form-control fs-5" id="floatingPassword" disabled
+                                            value="UserUser" placeholder="Password">
+                                        <label for="floatingPassword">Last Name</label>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class=" d-grid gap-2 col-3 col-sm-3 mx-auto center align-items-center">
+                                <button class="btn btn-primary btn-lg" type="button">Change</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container body ">
+            <div class="bloc1">
+                <article class="my-3" id="floating-labels">
+                    <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+                        <h1 class="display-6 fs-2">Password</h1>
+                    </div>
+            </div>
+
+            <div>
+                <div class="section2 bg-light p-5 ">
+                    <div class="container-fluid px-4 ">
+                        <div class="row justify-content-between g-4 section2 bg-light">
+                            <div class="col-6 col-sm-6">
+                                <form>
+                                    <div class="form-floating mb-3 form-select-lg text-center fs-4">
+                                        <input type="text" class="form-control fs-5" id="floatingInput" disabled
+                                            value="***********" placeholder="name@example.com">
+                                        <label for="floatingInput">Old Password</label>
+                                    </div>
+                                    <div class="form-floating form-select-lg text-center fs-4">
+                                        <input type="text" class="form-control fs-5" id="floatingPassword" disabled
+                                            value="*************" placeholder="Password">
+                                        <label for="floatingPassword">New Password</label>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class=" d-grid gap-2 col-3 col-sm-3 mx-auto center align-items-center">
+                                <button class="btn btn-primary btn-lg" type="button">Change</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container body ">
+            <div class="bloc1">
+                <article class="my-3" id="floating-labels">
+                    <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+                        <h1 class="display-6 fs-2">Account</h1>
+                    </div>
+            </div>
+            <div>
+                <div class="section2 bg-light p-4 ">
+                    <div class="container-fluid px-4  ">
+                        <div class="row justify-content-between g-4 section2 bg-light ">
+                            <div class="col-6 col-sm-6 ">
+
+                                <div>
+                                    <button class="btn btn-danger btn-lg" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">Disable My Account</button>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class=" modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title display-6 fs-4" id="exampleModalLabel">Disable account</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="display-6 fs-4">Are you sure to disable your account ?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-lg btn-danger"
+                                                    data-bs-dismiss="modal">No</button>
+                                                <button type="button" class="btn btn-lg btn-primary"
+                                                    data-bs-dismiss="modal">Yes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-6 col-sm-6 d-none" id="delete">
+
+                                <div class=" d-grid gap-2 col-3 col-sm-3 mx-auto center align-items-center">
+                                    <button class="btn btn-primary btn-lg" type="button">Change</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </article>
+    </main>
+
+
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#bootstrap" />
+            </svg>
+        </footer>
+    </div>
+
+  <script src="/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

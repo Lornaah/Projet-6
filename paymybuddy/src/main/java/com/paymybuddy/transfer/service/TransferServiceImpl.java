@@ -35,6 +35,9 @@ public class TransferServiceImpl implements TransferService {
 		if (userReceive.isEmpty() || (userSend.isEmpty())) {
 			throw new IllegalStateException("One of the user doesn't exist");
 		}
+		if (!userReceive.get().isActive() || !userSend.get().isActive())
+			throw new IllegalStateException("One of the user isn't active");
+
 		Transfer transfer = new Transfer(userSend.get(), userReceive.get(), transferRequest.getAmount());
 
 		validateTransfer(transfer);
