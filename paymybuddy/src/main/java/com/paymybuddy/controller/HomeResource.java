@@ -26,4 +26,19 @@ public class HomeResource {
 		return "profile";
 	}
 
+	@GetMapping("/signup")
+	public String signup() {
+		return "signup";
+	}
+
+	@GetMapping("/disconnected")
+	public String disconnected() {
+		return "disconnected";
+	}
+
+	@GetMapping("/welcome")
+	public String welcome() {
+		return "welcome";
+	}
+
 }
