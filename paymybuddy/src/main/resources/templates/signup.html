@@ -26,25 +26,25 @@
                 </div>
       		
                      
-                    <form class="" th:action="@{/log}" method="get">
+                    <form class="" th:action="@{/newUser}" th:object="${user}" method="post">
                      <div class="modal-body p-5 pt-0">
                         <div class="form-floating mb-3">
-                            <input type="email" name="username" class="form-control rounded-4 mt-3" id="floatingInput"
+                            <input type="email" th:field"*{mailAddress}"  name="mailAddress" class="form-control rounded-4 mt-3" id="floatingInput"
                                 placeholder="name@example.com">
                             <label for="floatingInput" class="fs-5 align-middle">Email</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="password" name="password" class="form-control rounded-4 mt-4" id="floatingPassword"
+                            <input type="password" th:field"*{password}"  name="password" class="form-control rounded-4 mt-4" id="floatingPassword"
                                 placeholder="Password">
                             <label for="floatingPassword" class="fs-5 align-middle">Password</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" name="username" class="form-control rounded-4 mt-3" id="floatingInput"
+                            <input type="text" th:field"*{firstName}"  name="firstName" class="form-control rounded-4 mt-3" id="floatingInput"
                                 placeholder="name@example.com">
                             <label for="floatingInput" class="fs-5 align-middle">First Name</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" name="username" class="form-control rounded-4 mt-3" id="floatingInput"
+                            <input type="text" th:field"*{lastName}" name="lastName" class="form-control rounded-4 mt-3" id="floatingInput"
                                 placeholder="name@example.com">
                             <label for="floatingInput" class="fs-5 align-middle">Last Name</label>
                         </div>

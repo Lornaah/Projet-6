@@ -37,9 +37,11 @@ public class User {
 		this.active = active;
 	}
 
-	public User(String mailAddress, String password) {
+	public User(String mailAddress, String password, String firstName, String lastName) {
 		this.mailAddress = mailAddress;
 		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 	public String getFirstName() {

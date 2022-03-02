@@ -35,7 +35,7 @@ public class RegistrationServiceTest {
 	public void registerUser() {
 
 		// Arrange
-		RegistrationRequest request = new RegistrationRequest("test", "test");
+		RegistrationRequest request = new RegistrationRequest("test@mail", "test", "test", "test");
 
 		// Act
 		registrationService.registerUser(request);
@@ -48,7 +48,7 @@ public class RegistrationServiceTest {
 	public void alreadyRegistered() {
 
 		// Arrange
-		RegistrationRequest request = new RegistrationRequest("test", "test");
+		RegistrationRequest request = new RegistrationRequest("test@mail", "test", "test", "test");
 		registrationService.registerUser(request);
 
 		// Act

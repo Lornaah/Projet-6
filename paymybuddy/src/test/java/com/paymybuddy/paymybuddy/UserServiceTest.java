@@ -50,7 +50,8 @@ public class UserServiceTest {
 
 		// Arrange
 		User user = newUser();
-		RegistrationRequest request = new RegistrationRequest(user.getMailAddress(), user.getPassword());
+		RegistrationRequest request = new RegistrationRequest(user.getMailAddress(), user.getPassword(),
+				user.getFirstName(), user.getLastName());
 		assertTrue(userService.alreadyRegistered(user.getMailAddress()));
 
 		// Act
@@ -93,7 +94,7 @@ public class UserServiceTest {
 	}
 
 	public User newUser() {
-		User user = new User("test", "test");
+		User user = new User("test@test.com", "test", "test", "test");
 		return userService.createUser(user);
 	}
 

@@ -18,10 +18,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 	@Override
 	public User registerUser(RegistrationRequest request) {
-		User user = new User(request.getMailAddress(), request.getPassword());
-		if (userService.alreadyRegistered(request.getMailAddress())) {
-			throw new IllegalStateException("Mail is already used");
-		}
+		User user = new User(request.getMailAddress(), request.getPassword(), request.getFirstName(),
+				request.getLastName());
 
 		user.setWallet(walletService.createWallet(user));
 
