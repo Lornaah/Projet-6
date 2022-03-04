@@ -33,6 +33,10 @@ public class RegistrationRequest {
 		return password;
 	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Override
 	public String toString() {
 		return "RegistrationRequest [mailAddress=" + mailAddress + ", password=" + password + ", firstName=" + firstName

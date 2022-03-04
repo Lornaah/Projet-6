@@ -11,4 +11,5 @@ import com.paymybuddy.user.models.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
 	Optional<User> findByMailAddress(String mailAddress);
+
 }

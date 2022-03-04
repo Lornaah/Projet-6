@@ -1,5 +1,8 @@
 package com.paymybuddy.transfer.service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.paymybuddy.transfer.model.Transfer;
 import com.paymybuddy.transfer.repository.TransferRepository;
+import com.paymybuddy.transfer.transferDTO.CurrentUserTransferDTO;
 import com.paymybuddy.transfer.transferDTO.TransferRequest;
 import com.paymybuddy.transfer.transferDTO.TransferResponseDTO;
 import com.paymybuddy.user.models.User;
@@ -29,7 +33,7 @@ public class TransferServiceImpl implements TransferService {
 	@Override
 	public TransferResponseDTO createTransfer(TransferRequest transferRequest) {
 
-		Optional<User> userReceive = userService.getUserByID(transferRequest.getUserReveiveID());
+		Optional<User> userReceive = userService.getUserByID(transferRequest.getUserReceiveID());
 		Optional<User> userSend = userService.getUserByID(transferRequest.getUserSendID());
 
 		if (userReceive.isEmpty() || (userSend.isEmpty())) {
@@ -38,7 +42,7 @@ public class TransferServiceImpl implements TransferService {
 		if (!userReceive.get().isActive() || !userSend.get().isActive())
 			throw new IllegalStateException("One of the user isn't active");
 
-		Transfer transfer = new Transfer(userSend.get(), userReceive.get(), transferRequest.getAmount());
+		Transfer transfer = new Transfer(userSend.get(), userReceive.get(), transferRequest.getAmount(), new Date());
 
 		validateTransfer(transfer);
 		sendMoney(transfer);
@@ -52,12 +56,12 @@ public class TransferServiceImpl implements TransferService {
 	private void validateTransfer(Transfer transfer) {
 		if (transfer.getUserSend().getWallet().getFounds() < transfer.getAmount())
 			throw new IllegalStateException("Not enough founds on the account");
-		if (!transfer.getUserSend().isActive() || !transfer.getUserReveive().isActive())
+		if (!transfer.getUserSend().isActive() || !transfer.getUserReceive().isActive())
 			throw new IllegalStateException("One of the user isn't active anymore");
 	}
 
 	private void receiveMoney(Transfer transfer) {
-		ManageFoundsDTO manageFoundsReceive = new ManageFoundsDTO(transfer.getUserReveive().getId(),
+		ManageFoundsDTO manageFoundsReceive = new ManageFoundsDTO(transfer.getUserReceive().getId(),
 				transfer.getAmount());
 		walletService.addFounds(manageFoundsReceive);
 	}
@@ -74,6 +78,27 @@ public class TransferServiceImpl implements TransferService {
 			return Optional.empty();
 		}
 		return Optional.of(new TransferResponseDTO(transferRepository.findById(ID).get()));
+	}
+
+	@Override
+	public List<CurrentUserTransferDTO> getAllTransfers(String currentUserName) {
+		Optional<User> currentUser = userService.getUserByUserName(currentUserName);
+		if (currentUser.isEmpty())
+			return new ArrayList<>();
+
+		int currentID = currentUser.get().getId();
+
+		List<Transfer> findByUser_Receive_IDOrUser_Send_ID = transferRepository
+				.findByUserReceive_idOrUserSend_id(currentID, currentID);
+
+		List<CurrentUserTransferDTO> currentUserTransferList = new ArrayList<>();
+
+		findByUser_Receive_IDOrUser_Send_ID.forEach(t -> {
+			CurrentUserTransferDTO currentUserTransferDTO = new CurrentUserTransferDTO(t);
+			currentUserTransferList.add(currentUserTransferDTO);
+		});
+
+		return currentUserTransferList;
 	}
 
 }

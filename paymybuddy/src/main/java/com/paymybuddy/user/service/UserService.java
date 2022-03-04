@@ -19,4 +19,6 @@ public interface UserService {
 	public Optional<User> getUser(UpdateRequest request);
 
 	public Optional<User> getUserByID(int ID);
+
+	public Optional<User> getUserByUserName(String name);
 }

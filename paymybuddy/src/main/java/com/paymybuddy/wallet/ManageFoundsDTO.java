@@ -10,6 +10,10 @@ public class ManageFoundsDTO {
 		this.amount = amount;
 	}
 
+	public ManageFoundsDTO() {
+
+	}
+
 	public Integer getUserID() {
 		return userID;
 	}

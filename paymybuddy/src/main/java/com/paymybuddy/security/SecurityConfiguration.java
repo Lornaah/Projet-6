@@ -26,10 +26,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/css/*.css").permitAll().antMatchers("/images/*")
-				.permitAll().antMatchers("/signup", "/newUser").anonymous().anyRequest().authenticated().and()
-				.formLogin().loginPage("/log").defaultSuccessUrl("/transfer", true).failureUrl("/error").permitAll()
-				.and().logout().logoutUrl("/disconnected").logoutSuccessUrl("/log").permitAll();
+		http.csrf().disable().authorizeRequests().antMatchers("/css/*.css", "/js/*.js", "/createTransfer").permitAll()
+				.antMatchers("/images/*").permitAll().antMatchers("/signup", "/newUser").anonymous().anyRequest()
+				.authenticated().and().formLogin().loginPage("/log").defaultSuccessUrl("/transfer", true)
+				.failureUrl("/error").permitAll().and().logout().logoutUrl("/disconnected").logoutSuccessUrl("/log")
+				.permitAll();
 	}
 
 	@Bean

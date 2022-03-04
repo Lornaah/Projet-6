@@ -12,7 +12,7 @@ public class TransferResponseDTO {
 
 	public TransferResponseDTO(Transfer transfer) {
 		this.userSend = new TransferUserDTO(transfer.getUserSend());
-		this.userReceive = new TransferUserDTO(transfer.getUserReveive());
+		this.userReceive = new TransferUserDTO(transfer.getUserReceive());
 		this.amount = transfer.getAmount();
 		this.taxedAmount = transfer.getTaxedAmount();
 		this.ID = transfer.getId();

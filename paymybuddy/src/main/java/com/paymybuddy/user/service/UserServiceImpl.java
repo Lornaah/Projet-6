@@ -82,4 +82,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return userRepository.findById(ID);
 
 	}
+
+	@Override
+	public Optional<User> getUserByUserName(String name) {
+		return userRepository.findByMailAddress(name);
+	}
 }

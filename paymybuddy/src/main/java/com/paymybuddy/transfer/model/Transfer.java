@@ -1,5 +1,7 @@
 package com.paymybuddy.transfer.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,18 +21,28 @@ public class Transfer {
 	@OneToOne
 	private User userSend;
 	@OneToOne
-	private User userReveive;
+	private User userReceive;
 	private float amount;
 	private float taxedAmount;
+	private Date date;
 
 	public Transfer() {
 	}
 
-	public Transfer(User userSend, User userReveive, float amount) {
+	public Transfer(User userSend, User userReceive, float amount, Date date) {
 		this.userSend = userSend;
-		this.userReveive = userReveive;
+		this.userReceive = userReceive;
 		this.amount = amount;
+		this.date = date;
 		computeTaxAmount();
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public int getId() {
@@ -45,12 +57,12 @@ public class Transfer {
 		this.userSend = userSend;
 	}
 
-	public User getUserReveive() {
-		return userReveive;
+	public User getUserReceive() {
+		return userReceive;
 	}
 
-	public void setUserReveive(User userReveive) {
-		this.userReveive = userReveive;
+	public void setUserReceive(User userReceive) {
+		this.userReceive = userReceive;
 	}
 
 	public float getAmount() {
@@ -88,8 +100,8 @@ public class Transfer {
 	}
 
 	private void receive() {
-		float founds = userReveive.getWallet().getFounds();
+		float founds = userReceive.getWallet().getFounds();
 
-		userReveive.getWallet().setFounds(founds + amount);
+		userReceive.getWallet().setFounds(founds + amount);
 	}
 }
