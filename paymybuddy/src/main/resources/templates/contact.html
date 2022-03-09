@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Pay My Buddy</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+    <main>
+        <nav class="py-2 head border-bottom px-5">
+            <div class="d-flex flex-wrap headerbar fs-5 mx-5">
+                <ul class="nav me-auto">
+
+                    <button class="btn btn-logo btn-primary btn-lg " type="button">Pay My Buddy</button>
+                </ul>
+                <ul class="nav">
+                    <li class="nav-item"><a th:href="@{/welcome}" class="nav-link px-2">Home</a></li>
+                    <li class="nav-item"><a th:href="@{/transfer}" class="nav-link px-2">Transfer</a></li>
+                    <li class="nav-item"><a th:href="@{/profile}" class="nav-link px-2">Profile</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 active" aria-current="page">Contact</a></li>
+                    <li class="nav-item"><a th:href="@{/disconnected}" class="nav-link px-2">Log off</a></li>
+                </ul>
+            </div>
+        </nav>
+        <header class="py-3 mb-4 border-bottom bg-light px-5 fs-4">
+            <div class="d-flex flex-wrap mx-5">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                    </ol>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Wrapper container -->
+        <div class="container body">
+
+            <!-- Bootstrap 5 starter form -->
+            <form th:action="@{/sendMessage}" th:object="${message}" method="post" id="contactForm">
+
+                <!-- Name input -->
+                <div class="mb-3 form floating form-select-lg">
+                    <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+                        <h1 class="display-6 fs-2">Name</h1>
+                        <input th:field"*{name}" name="name" class="form-control fs-5 nameContact" id="nameInput" type="text" placeholder="Name" 
+                        pattern="^[A-Z](([A-Za-z])*|(-|'|[Ä-ÿ]|\s))*$" title="Must begins by one uppercase and be followed by at least one lowercase"/>
+                    </div>
+                </div>
+
+                <!-- Email address input -->
+                <div class="mb-3 form floating form-select-lg">
+                    <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+                        <h1 class="display-6 fs-2">Email Address</h1>
+                        <input th:field"*{mail}" name="mail" class="form-control mailContact fs-5" id="emailAddress" type="email" placeholder="Email Address" 
+                        pattern="^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$" title="Must end with a domain name (.com, .fr)"/>      
+                    </div>
+                </div>
+
+                <!-- Message input -->
+                <div class="mb-3 form-select-lg">
+                    <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+                        <h1 class="display-6 fs-2">Message</h1>
+                        <textarea th:field"*{content}" name="content" class="form-control fs-5 messageContact" id="message" type="text" placeholder="Message"
+                            style="height: 10rem;"></textarea>
+                    </div>
+                </div>
+
+                <!-- Form submit button -->
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+                </div>
+
+            </form>
+
+        </div>

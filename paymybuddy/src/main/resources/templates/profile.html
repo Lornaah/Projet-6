@@ -11,8 +11,8 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/headers/">
 
-  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
-  <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -27,8 +27,9 @@
                 <ul class="nav">
                     <li class="nav-item"><a th:href="@{/welcome}" class="nav-link px-2">Home</a></li>
                     <li class="nav-item"><a th:href="@{/transfer}" class="nav-link px-2">Transfer</a></li>
-                    <li class="nav-item"><a th:href="@{/profile}" class="nav-link px-2  active" aria-current="page">Profile</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2">Contact</a></li>
+                    <li class="nav-item"><a th:href="@{/profile}" class="nav-link px-2  active"
+                            aria-current="page">Profile</a></li>
+                    <li class="nav-item"><a th:href="@{/contact}" class="nav-link px-2">Contact</a></li>
                     <li class="nav-item"><a th:href="@{/disconnected}" class="nav-link px-2">Log off</a></li>
                 </ul>
             </div>
@@ -56,22 +57,29 @@
                     <div class="container-fluid px-4 ">
                         <div class="row justify-content-between g-4 section2 bg-light">
                             <div class="col-6 col-sm-6">
-                                <form>
+                                <form th:action="@{/changeName}" th:object="${nameInfos}" method="post" id="nameForm">
                                     <div class="form-floating mb-3 form-select-lg text-center fs-4">
-                                        <input type="text" class="form-control fs-5" id="floatingInput" disabled
-                                            value="User1" placeholder="name@example.com">
-                                        <label for="floatingInput">First Name</label>
+                                        <input type="text"  name="newFirstName" th:field="*{newFirstName}" class="name form-control fs-5"
+                                            id="floatingInputFirstname" readonly th:value="${newFirstName}" placeholder="Name"
+                                            pattern="^[A-Z](([A-Za-z])*|(-|'|[Ä-ÿ]|\s))*$"
+                                            title="Must begins by one uppercase and be followed by at least one lowercase">
+                                        <label class="inputLabel" for="floatingInputFirstname">First Name</label>
                                     </div>
                                     <div class="form-floating form-select-lg text-center fs-4">
-                                        <input type="text" class="form-control fs-5" id="floatingPassword" disabled
-                                            value="UserUser" placeholder="Password">
-                                        <label for="floatingPassword">Last Name</label>
+                                        <input type="text" name="newLastName" class="name form-control fs-5"
+                                            id="floatingInputLastName" readonly th:value="${newLastName}"
+                                            th:field="*{newLastName}" placeholder="Name"
+                                            pattern="^[A-Z](([A-Za-z])*|(-|'|[Ä-ÿ]|\s))*$"
+                                            title="Must begins by one uppercase and be followed by at least one lowercase">
+                                        <label class="inputLabel" for="floatingInputLastName">Last Name</label>
                                     </div>
                                 </form>
                             </div>
                             <div class=" d-grid gap-2 col-3 col-sm-3 mx-auto center align-items-center">
-                                <button class="btn btn-primary btn-lg" type="button">Change</button>
+                                <button id="nameButton" class="btn btn-primary btn-lg btn-validate" type="submit"
+                                    onclick="toggle('input.name')">Change</button>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -91,21 +99,25 @@
                     <div class="container-fluid px-4 ">
                         <div class="row justify-content-between g-4 section2 bg-light">
                             <div class="col-6 col-sm-6">
-                                <form>
+                                <form id="passwordForm" th:action="@{/changePassword}" th:object="${updatePasswordDTO}"
+                                    method="post">
                                     <div class="form-floating mb-3 form-select-lg text-center fs-4">
-                                        <input type="text" class="form-control fs-5" id="floatingInput" disabled
-                                            value="***********" placeholder="name@example.com">
-                                        <label for="floatingInput">Old Password</label>
+                                        <input name="oldPassword" type="password"
+                                            class="form-control password fs-5" id="floatingOldPassword" readonly
+                                            placeholder="Password" th:value="${oldPassword}" th:field="*{oldPassword}">
+                                        <label class="inputLabel" for="floatingOldPassword">Old Password</label>
                                     </div>
                                     <div class="form-floating form-select-lg text-center fs-4">
-                                        <input type="text" class="form-control fs-5" id="floatingPassword" disabled
-                                            value="*************" placeholder="Password">
-                                        <label for="floatingPassword">New Password</label>
+                                        <input name="newPassword" type="password"
+                                            class="form-control password fs-5" id="floatingNewPassword" readonly
+                                            placeholder="Password" th:value="${newPassword}" th:field="*{newPassword}">
+                                        <label class="inputLabel" for="floatingNewPassword">New Password</label>
                                     </div>
                                 </form>
                             </div>
                             <div class=" d-grid gap-2 col-3 col-sm-3 mx-auto center align-items-center">
-                                <button class="btn btn-primary btn-lg" type="button">Change</button>
+                                <button id="passwordButton" class="btn btn-primary btn-lg btn-validate" type="button"
+                                    onclick="toggleAndClearInput('input.password')">Change</button>
                             </div>
                         </div>
                     </div>
@@ -131,30 +143,6 @@
                                     <button class="btn btn-danger btn-lg" type="button" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal">Disable My Account</button>
                                 </div>
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class=" modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title display-6 fs-4" id="exampleModalLabel">Disable account</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p class="display-6 fs-4">Are you sure to disable your account ?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-lg btn-danger"
-                                                    data-bs-dismiss="modal">No</button>
-                                                <button type="button" class="btn btn-lg btn-primary"
-                                                    data-bs-dismiss="modal">Yes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
                             </div>
 
                             <div class="col-6 col-sm-6 d-none" id="delete">
@@ -179,7 +167,51 @@
         </footer>
     </div>
 
-  <script src="/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Modal ChangeName ChangePassword -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class=" modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title display-6 fs-4" id="exampleModalLabel">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="display-6 fs-4">Do you want to confirm your change ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal">No</button>
+                    <button id="confirmChange" type="button" class="btn btn-lg btn-primary"
+                        data-bs-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal DisableAccount -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class=" modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title display-6 fs-4" id="exampleModalLabel">Disable
+                        account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="display-6 fs-4">Are you sure to disable your account ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-lg btn-primary" data-bs-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/validation.js"></script>
+
 
 </body>
 

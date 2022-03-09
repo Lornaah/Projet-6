@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.paymybuddy.security.SecurityService;
 import com.paymybuddy.transfer.service.TransferService;
+import com.paymybuddy.user.models.User;
 import com.paymybuddy.user.service.UserService;
+import com.paymybuddy.user.updateDTO.UpdatePasswordDTO;
+import com.paymybuddy.user.updateDTO.UpdateProfileDTO;
 
 @Controller
 public class HomeResource {
@@ -27,7 +30,7 @@ public class HomeResource {
 
 	@GetMapping("/")
 	public String home() {
-		return "transfer";
+		return "redirect:/transfer";
 	}
 
 	@GetMapping("/log")
@@ -36,7 +39,13 @@ public class HomeResource {
 	}
 
 	@GetMapping("/profile")
-	public String profile() {
+	public String profile(Model model) {
+		String currentUserName = SecurityService.getCurrentUserName();
+		User user = userService.getUserByUserName(currentUserName).get();
+		UpdateProfileDTO updateProfileDTO = new UpdateProfileDTO(user.getFirstName(), user.getLastName());
+		model.addAttribute("nameInfos", updateProfileDTO);
+		UpdatePasswordDTO updatePasswordDTO = new UpdatePasswordDTO("password", "password");
+		model.addAttribute("updatePasswordDTO", updatePasswordDTO);
 		return "profile";
 	}
 
@@ -53,6 +62,11 @@ public class HomeResource {
 	@GetMapping("/welcome")
 	public String welcome() {
 		return "welcome";
+	}
+
+	@GetMapping("/contact")
+	public String contact() {
+		return "contact";
 	}
 
 	@GetMapping("/addFounds")

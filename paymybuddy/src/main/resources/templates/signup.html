@@ -30,6 +30,7 @@
                      <div class="modal-body p-5 pt-0">
                         <div class="form-floating mb-3">
                             <input type="email" th:field"*{mailAddress}"  name="mailAddress" class="form-control rounded-4 mt-3" id="floatingInput"
+                           pattern="^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$" title="Must end with a domain name (.com, .fr) "
                                 placeholder="name@example.com" required>
                             <label for="floatingInput" class="fs-5 align-middle">Email</label>
                             
@@ -39,6 +40,7 @@
                         </div>
                         <div class="form-floating mb-3">
                             <input type="password" th:field"*{password}"  name="password" 
+                             pattern="^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,})\S$" title="Must contains at least : one lowercase, one uppercase, one number, on special character (&!?$...)"
                              class="form-control rounded-4 mt-4" id="floatingPassword"
                                 placeholder="Password" required>
                             <label for="floatingPassword" class="fs-5 align-middle">Password</label>
@@ -46,12 +48,14 @@
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" th:field"*{firstName}"  name="firstName" class="form-control rounded-4 mt-3" id="floatingInput"
+                            pattern="^[A-Z](([A-Za-z])*|(-|'|[Ä-ÿ]|\s))*$" title="Must begins by one uppercase and be followed by at least one lowercase"
                                 placeholder="name@example.com" required>
                             <label for="floatingInput" class="fs-5 align-middle">First Name</label>
                         </div>
                         
                         <div class="form-floating mb-3">
                             <input type="text" th:field"*{lastName}" name="lastName" class="form-control rounded-4 mt-3" id="floatingInput"
+                            pattern="^[A-Z](([A-Za-z])*|(-|'|[Ä-ÿ]|\s))*$" title="Must begins by one uppercase and be followed by at least one lowercase"
                                 placeholder="name@example.com" required>
                             <label for="floatingInput" class="fs-5 align-middle">Last Name</label>    
                         </div>
@@ -65,7 +69,6 @@
     </div>
     </div>
     
-      <script th:src="@{/js/validation.js}"></script>
     
     
 </body>

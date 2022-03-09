@@ -1,4 +1,4 @@
-package com.paymybuddy.user;
+package com.paymybuddy.user.updateDTO;
 
 import java.util.Objects;
 

@@ -1,29 +1,47 @@
-const form = document.getElementById("form");
-form.noValidate = true;
-form.addEventListener("submit", validate);
-
-function validate(e) {
-    const form = e.target;
-
-    const field = Array.from(form.elements);
-    field.forEach(f => {
-        f.parentElement.classList.remove("invalid");
-        f.setCustomValidity = "";
-    });
-
-    var mail = form.mailAddress.value;
-    if(mail == null || mail == ""){
-        form.mailAddress.setCustomValidity("Email cannot be empty");
-    }
-    if(!/^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$/.test(mail)){
-        form.mailAddress.setCustomValidity("Email must be valid")
-    }
-    f.parentElement.classList.add("invalid");
-
-
-    if (!form.checkValidity()) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-    }
-
+function toggle(className) {
+    document.querySelectorAll(className).forEach(element => element.readOnly = !element.readOnly);
 }
+
+function clearInput(className) {
+    document.querySelectorAll(className).forEach(element => {
+        if (!element.readOnly) {
+            element.value = "";
+        }
+    });
+}
+
+function toggleAndClearInput(className) {
+    toggle(className);
+    clearInput(className);
+}
+
+var buttons = document.querySelectorAll('.btn-validate');
+var currentForm;
+
+Array.from(buttons).forEach(btn => {
+    btn.addEventListener('click', function (event) {
+        if (btn.innerText === 'Validate') {
+
+            if (btn.id === 'nameButton') {
+                currentForm = "nameForm";
+            }
+            if (btn.id === 'passwordButton') {
+                currentForm = "passwordForm";
+            }
+        }
+
+        btn.innerText = btn.innerText === "Change" ? "Validate" : "Change";
+        btn.style.background = btn.innerText === "Change" ? "rgb(92, 185, 92)" : "rgb(0, 118, 217)";
+        if (btn.innerText === "Change") {
+            var myModal = new bootstrap.Modal(document.getElementById("confirmModal"));
+            myModal.toggle();
+        }
+    });
+});
+
+var confirmChange = document.getElementById("confirmChange");
+confirmChange.addEventListener("click", function (event) {
+    var form = document.getElementById(currentForm);
+    console.log(form);
+    form.requestSubmit();
+});
