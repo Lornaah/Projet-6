@@ -118,4 +118,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return "Wrong Password, try again";
 	}
 
+	@Override
+	public void disableAccountByUserName(String currentUserName) {
+		User currentUser = getUserByUserName(currentUserName).get();
+		currentUser.setActive(false);
+		userRepository.save(currentUser);
+	}
+
 }

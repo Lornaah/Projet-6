@@ -5,17 +5,15 @@ import java.util.Objects;
 
 public class TransferRequest {
 
-	private int userSendID;
 	private int userReceiveID;
 	private float amount;
 	private Date date;
 
-	public TransferRequest(int userSendID, int userReceiveID, float amount) {
-		this(userSendID, userReceiveID, amount, new Date());
+	public TransferRequest(int userReceiveID, float amount) {
+		this(userReceiveID, amount, new Date());
 	}
 
-	public TransferRequest(int userSendID, int userReceiveID, float amount, Date date) {
-		this.userSendID = userSendID;
+	public TransferRequest(int userReceiveID, float amount, Date date) {
 		this.userReceiveID = userReceiveID;
 		this.amount = amount;
 		this.date = date;
@@ -31,14 +29,6 @@ public class TransferRequest {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public int getUserSendID() {
-		return userSendID;
-	}
-
-	public void setUserSendID(int userSendID) {
-		this.userSendID = userSendID;
 	}
 
 	public int getUserReceiveID() {
@@ -59,7 +49,7 @@ public class TransferRequest {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(amount, date, userReceiveID, userSendID);
+		return Objects.hash(amount, date, userReceiveID);
 	}
 
 	@Override
@@ -72,13 +62,12 @@ public class TransferRequest {
 			return false;
 		TransferRequest other = (TransferRequest) obj;
 		return Float.floatToIntBits(amount) == Float.floatToIntBits(other.amount) && Objects.equals(date, other.date)
-				&& userReceiveID == other.userReceiveID && userSendID == other.userSendID;
+				&& userReceiveID == other.userReceiveID;
 	}
 
 	@Override
 	public String toString() {
-		return "TransferRequest [userSendID=" + userSendID + ", userReceiveID=" + userReceiveID + ", amount=" + amount
-				+ ", date=" + date + "]";
+		return "TransferRequest [userReceiveID=" + userReceiveID + ", amount=" + amount + ", date=" + date + "]";
 	}
 
 }

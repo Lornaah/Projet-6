@@ -44,7 +44,7 @@ public class TransferServiceTest {
 	public void createTransfer() {
 
 		// Arrange
-		TransferRequest transferRequest = new TransferRequest(userSend.getId(), userReceive.getId(), 100);
+		TransferRequest transferRequest = new TransferRequest(userSend.getId(), userReceive.getId());
 
 		// Act
 		TransferResponseDTO transfer = transferService.createTransfer(transferRequest);
@@ -57,7 +57,7 @@ public class TransferServiceTest {
 	public void getTransfer() {
 
 		// Arrange
-		TransferRequest transferRequest = new TransferRequest(userSend.getId(), userReceive.getId(), 100);
+		TransferRequest transferRequest = new TransferRequest(userSend.getId(), userReceive.getId());
 		TransferResponseDTO transfer = transferService.createTransfer(transferRequest);
 
 		// Act

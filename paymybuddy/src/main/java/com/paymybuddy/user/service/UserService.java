@@ -25,4 +25,6 @@ public interface UserService {
 	public Optional<User> getUserByUserName(String name);
 
 	public String updatePasswordByUserName(String currentUserName, UpdatePasswordDTO updatePasswordDTO);
+
+	public void disableAccountByUserName(String currentUserName);
 }

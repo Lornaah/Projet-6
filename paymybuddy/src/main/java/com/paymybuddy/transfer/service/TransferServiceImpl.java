@@ -2,12 +2,17 @@ package com.paymybuddy.transfer.service;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.paymybuddy.security.SecurityService;
 import com.paymybuddy.transfer.model.Transfer;
 import com.paymybuddy.transfer.repository.TransferRepository;
 import com.paymybuddy.transfer.transferDTO.CurrentUserTransferDTO;
@@ -22,19 +27,20 @@ import com.paymybuddy.wallet.service.WalletService;
 public class TransferServiceImpl implements TransferService {
 
 	@Autowired
-	TransferRepository transferRepository;
+	private TransferRepository transferRepository;
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
-	WalletService walletService;
+	private WalletService walletService;
 
 	@Override
 	public TransferResponseDTO createTransfer(TransferRequest transferRequest) {
+		String currentUserName = SecurityService.getCurrentUserName();
 
 		Optional<User> userReceive = userService.getUserByID(transferRequest.getUserReceiveID());
-		Optional<User> userSend = userService.getUserByID(transferRequest.getUserSendID());
+		Optional<User> userSend = userService.getUserByUserName(currentUserName);
 
 		if (userReceive.isEmpty() || (userSend.isEmpty())) {
 			throw new IllegalStateException("One of the user doesn't exist");
@@ -80,25 +86,40 @@ public class TransferServiceImpl implements TransferService {
 		return Optional.of(new TransferResponseDTO(transferRepository.findById(ID).get()));
 	}
 
+//	@Override
+//	public List<CurrentUserTransferDTO> getAllTransfers(String currentUserName) {
+//		Optional<User> currentUser = userService.getUserByUserName(currentUserName);
+//		if (currentUser.isEmpty())
+//			return new ArrayList<>();
+//
+//		int currentID = currentUser.get().getId();
+//
+//		List<Transfer> findByUser_Receive_IDOrUser_Send_ID = transferRepository
+//				.findByUserReceive_idOrUserSend_id(currentID, currentID);
+//
+//		List<CurrentUserTransferDTO> currentUserTransferList = new ArrayList<>();
+//
+//		findByUser_Receive_IDOrUser_Send_ID.forEach(t -> {
+//			CurrentUserTransferDTO currentUserTransferDTO = new CurrentUserTransferDTO(t);
+//			currentUserTransferList.add(currentUserTransferDTO);
+//		});
+//
+//		return currentUserTransferList;
+//	}
+
 	@Override
-	public List<CurrentUserTransferDTO> getAllTransfers(String currentUserName) {
-		Optional<User> currentUser = userService.getUserByUserName(currentUserName);
+	public Page<CurrentUserTransferDTO> getTransfersPaginated(int pageNum, int pageSize) {
+		Pageable pageable = PageRequest.of((pageNum - 1), pageSize, Sort.by("date").descending());
+		String userName = SecurityService.getCurrentUserName();
+		Optional<User> currentUser = userService.getUserByUserName(userName);
 		if (currentUser.isEmpty())
-			return new ArrayList<>();
+			return new PageImpl<>(new ArrayList<>());
 
 		int currentID = currentUser.get().getId();
+		Page<Transfer> transferPage = transferRepository.findByUserReceive_idOrUserSend_id(currentID, currentID,
+				pageable);
 
-		List<Transfer> findByUser_Receive_IDOrUser_Send_ID = transferRepository
-				.findByUserReceive_idOrUserSend_id(currentID, currentID);
-
-		List<CurrentUserTransferDTO> currentUserTransferList = new ArrayList<>();
-
-		findByUser_Receive_IDOrUser_Send_ID.forEach(t -> {
-			CurrentUserTransferDTO currentUserTransferDTO = new CurrentUserTransferDTO(t);
-			currentUserTransferList.add(currentUserTransferDTO);
-		});
-
-		return currentUserTransferList;
+		return transferPage.map(t -> new CurrentUserTransferDTO(t));
 	}
 
 }

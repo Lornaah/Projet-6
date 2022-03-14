@@ -24,6 +24,9 @@ public class MyUserDetailsService implements UserDetailsService {
 		if (user.isEmpty()) {
 			throw new UsernameNotFoundException(mail);
 		}
+		if (!user.get().isActive()) {
+			throw new UsernameNotFoundException("This Account is not active. Please contact an admnistrator");
+		}
 		return new MyUserPrincipal(user.get());
 	}
 }

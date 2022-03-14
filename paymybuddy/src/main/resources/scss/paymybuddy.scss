@@ -66,6 +66,9 @@ input[type=email]{
   &.mailContact{
     background-position: 13px 13px;
   }
+  &.enterMail{
+    background-position: 20px 12px;
+  }
 }
 
 input[type=password]{
@@ -124,3 +127,7 @@ padding: 0.375rem 2.5rem;
 .form-control.nameContact{
   padding: 0.375rem 2.5rem;
 }
+
+.form-control.enterMail{
+ padding: 0.375rem 3rem;
+ }

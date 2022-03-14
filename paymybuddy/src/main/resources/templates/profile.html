@@ -57,7 +57,9 @@
                     <div class="container-fluid px-4 ">
                         <div class="row justify-content-between g-4 section2 bg-light">
                             <div class="col-6 col-sm-6">
+                            
                                 <form th:action="@{/changeName}" th:object="${nameInfos}" method="post" id="nameForm">
+                                
                                     <div class="form-floating mb-3 form-select-lg text-center fs-4">
                                         <input type="text"  name="newFirstName" th:field="*{newFirstName}" class="name form-control fs-5"
                                             id="floatingInputFirstname" readonly th:value="${newFirstName}" placeholder="Name"
@@ -99,6 +101,7 @@
                     <div class="container-fluid px-4 ">
                         <div class="row justify-content-between g-4 section2 bg-light">
                             <div class="col-6 col-sm-6">
+                            
                                 <form id="passwordForm" th:action="@{/changePassword}" th:object="${updatePasswordDTO}"
                                     method="post">
                                     <div class="form-floating mb-3 form-select-lg text-center fs-4">
@@ -114,6 +117,7 @@
                                         <label class="inputLabel" for="floatingNewPassword">New Password</label>
                                     </div>
                                 </form>
+                                
                             </div>
                             <div class=" d-grid gap-2 col-3 col-sm-3 mx-auto center align-items-center">
                                 <button id="passwordButton" class="btn btn-primary btn-lg btn-validate" type="button"
@@ -192,6 +196,8 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class=" modal-dialog modal-dialog-centered">
             <div class="modal-content">
+            
+            <form th:action="@{/disableAccount}" method="get" id="disableAccount">
                 <div class="modal-header">
                     <h5 class="modal-title display-6 fs-4" id="exampleModalLabel">Disable
                         account</h5>
@@ -202,9 +208,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-lg btn-primary" data-bs-dismiss="modal">Yes</button>
+                    <button type="submit" class="btn btn-lg btn-primary" data-bs-dismiss="modal">Yes</button>
                 </div>
+                 </form>
+                 
             </div>
+           
         </div>
     </div>
 

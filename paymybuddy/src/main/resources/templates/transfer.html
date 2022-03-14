@@ -59,17 +59,18 @@
             <div class="bloc1">
                 <div class="section1 d-flex justify-content-between">
                     <h1 class="display-6 col-sm-6"> Send Money</h1>
-                    <button class="btn btn-secondary btn-lg col-sm-3" type="button">Add Connection</button>
+                    <button class="btn btn-secondary btn-lg col-sm-3" type="button" data-bs-toggle="modal"
+                        data-bs-target="#addConnection">Add Connection</button>
                     <button class="btn btn-secondary btn-lg col-sm-2 " type="button" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">Add Money</button>
+                        data-bs-target="#addMoneyModal">Add Money</button>
                 </div>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="addMoneyModal" tabindex="-1" aria-labelledby="amountLabel"
                     aria-hidden="true">
                     <div class=" modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Select an amount</h5>
+                                <h5 class="modal-title" id="amountLabel">Select an amount</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -78,8 +79,9 @@
                                 <div class="modal-body">
                                     <p class="display-6 fs-4">Select an amount to add to your wallet</p>
                                     <div class="input-group">
-                                        <input type="number" name="amount" th:field"*{amount}" step="0.01" class="form-control fs-5 text-center"
-                                            placeholder="Enter An Amount" min="0" max="100" required>
+                                        <input type="number" name="amount" th:field"*{amount}" step="0.01"
+                                            class="form-control fs-5 text-center" placeholder="Enter An Amount" min="1"
+                                            required>
                                         <span class="input-group-text">$</span>
                                     </div>
                                 </div>
@@ -95,39 +97,45 @@
                         </div>
                     </div>
                 </div>
-                <div class="section2 bg-light p-5">
-                    <div class="container-fluid px-4">
-                        <div class="row justify-content-between g-4 section2 bg-light">
-                            <div class="col-5 col-sm-5">
 
-                                <select class="form-select form-select-lg text-center"
-                                    aria-label=".form-select-lg example">
-                                    <option selected>Select A Connection</option>
-                                    <option value="1">People 1</option>
-                                    <option value="2">People 2</option>
-                                    <option value="3">People 3</option>
-                                </select>
-                            </div>
+                <form th:action="@{/createTransfer}" th:object="${newTransfer}" method="post" id="tranferForm">
 
-                            <div class="col-4 col-sm-4 d-grid">
-                                <div class="input-group">
-                                    <input type="number" class="form-control fs-5 text-center"
-                                        placeholder="Enter An Amount" min="10" max="100" step="10" required
-                                        value="number">
-                                    <span class="input-group-text">€</span>
+                    <div class="section2 bg-light p-5">
+                        <div class="container-fluid px-4">
+                            <div class="row justify-content-between g-4 section2 bg-light">
+
+
+                                <div class="col-5 col-sm-5">
+
+                                    <select th:field="*{userReceiveID}" class="form-select form-select-lg text-center"
+                                        aria-label=".form-select-lg example">
+                                        <option selected text="Select a connection" th:value="-1">Select A Connection
+                                        </option>
+                                        <option th:each="connection : ${connectionList}" th:value="${connection.id}"
+                                            th:text="${connection.firstNameConnection + ' ' + connection.lastNameConnection + ' ( ' + connection.mailAddress + ' )'}">
+                                        </option>
+                                    </select>
                                 </div>
-                            </div>
 
-                            <div class="d-grid gap-2 col-3 col-sm-3 mx-auto">
-                                <button class="btn btn-primary btn-lg" type="button">Pay</button>
-                            </div>
+                                <div class="col-4 col-sm-4 d-grid">
+                                    <div class="input-group">
+                                        <input th:field="*{amount}" type="number" class="form-control fs-5 text-center"
+                                            placeholder="Enter An Amount" min="1" required value="number">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                </div>
 
+                                <div class="d-grid gap-2 col-3 col-sm-3 mx-auto">
+                                    <button class="btn btn-primary btn-lg" type="submit">Pay</button>
+                                </div>
+
+
+                            </div>
                         </div>
                     </div>
-                </div>
 
             </div>
-
+            </form>
             <div class="bloc2 my-4">
                 <div class="myTransactions">
                     <h1 class="display-6"> My Transactions</h1>
@@ -143,11 +151,11 @@
                             </thead>
 
                             <tbody>
-                                <tr th:if="${transferList.empty}">
+                                <tr th:if="${listTransfer.empty}">
                                     <td colspan="4"> No Transfer Available </td>
                                 </tr>
 
-                                <tr th:each="transfer : ${transferList}">
+                                <tr th:each="transfer : ${listTransfer}">
                                     <td> <span th:text="${transfer.firstNameSender + ' ' + transfer.lastNameSender}">
                                             Firstname and Lastname of the Sender </span> </td>
                                     <td> <span
@@ -166,23 +174,69 @@
 
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
+                    <li class="page-item" th:if="${currentPage>1}">
+                        <a th:href="@{'/transfer/' + ${currentPage-1}}" class="page-link"
+                            aria-label="Previous">&laquo;</a>
+
+                    </li>
+
+                    <li class="page-item disabled" th:unless="${currentPage>1}">
+                        <a class="page-link" aria-hidden="true">&laquo;</a>
+                    </li>
+
+                    <li class="page-item" th:if="${totalPages > 0}" th:each="i: ${#numbers.sequence(1, totalPages)}"
+                        th:classappend="${currentPage == i} ? active : unactive">
+                        <a class="page-link" th:if="${currentPage !=i}" th:href="@{'/transfer/' + ${i}}"> [[${i}]] </a>
+                        <a class="page-link" th:unless="${currentPage !=i}">[[${i}]]</a> &nbsp; &nbsp;
+                    </li>
+
+                    <li class="page-item active" th:unless="${totalPages > 0}">
+                        <a class="page-link"> 1
+
                         </a>
                     </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
+
+                    <li class="page-item" th:if="${currentPage < totalPages}">
+                        <a th:href="@{'/transfer/' + ${currentPage+1}}" class="page-link" aria-label="Next">&raquo;</a>
+                    </li>
+
+                    <li class="page-item disabled" th:unless="${currentPage < totalPages}">
+                        <a class="page-link" ria-hidden="true">&raquo;</a>
+
                     </li>
                 </ul>
             </nav>
         </div>
     </main>
+
+    <!-- Modal  AddConnection -->
+    <div class="modal fade" id="addConnection" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class=" modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form th:action="@{/newConnection}" th:object="${connectionMail}" method="post" id="connectionForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title display-6 fs-4" id="exampleModalLabel">Add Connection</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="display-6 fs-4">Who do you want to connect to? </p>
+
+                        <div class="input-group">
+                            <input type="email" name="email" class="enterMail form-control fs-5" th:field="*{mail}"
+                                placeholder="Enter an email" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button id="confirmChange" type="submit" class="btn btn-lg btn-primary"
+                            data-bs-dismiss="modal">Confirm</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
 
