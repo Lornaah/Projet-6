@@ -1,6 +1,11 @@
 package com.paymybuddy.paymybuddy.IntegrationTest;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +27,7 @@ import com.paymybuddy.user.service.UserService;
 import com.paymybuddy.wallet.ManageFoundsDTO;
 import com.paymybuddy.wallet.service.WalletService;
 
+@Transactional
 @SpringBootTest
 public class TransferServiceITest {
 
@@ -38,7 +44,7 @@ public class TransferServiceITest {
 	UserService userService;
 
 	@Autowired
-	WalletService wallerService;
+	WalletService walletService;
 
 	@Autowired
 	ClearDB clearDB;
@@ -63,7 +69,7 @@ public class TransferServiceITest {
 		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
 			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.com");
 			ManageFoundsDTO foundRequest = new ManageFoundsDTO(userSend.getId(), 500);
-			wallerService.addFounds(foundRequest);
+			walletService.addFounds(foundRequest);
 
 			// Act
 			TransferRequest transferRequest = new TransferRequest(userReceive.getId(), 500);
@@ -73,6 +79,49 @@ public class TransferServiceITest {
 			assertTrue(transfer != null);
 		}
 
+	}
+
+	@Test
+	public void createTransferWhenUserSendHasNotEnoughFounds() {
+
+		// Arrange
+		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
+			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.com");
+			ManageFoundsDTO foundRequest = new ManageFoundsDTO(userSend.getId(), 100);
+			walletService.addFounds(foundRequest);
+
+			// Act
+			TransferRequest transferRequest = new TransferRequest(userReceive.getId(), 500);
+
+			// Assert
+			assertThrows(IllegalStateException.class, () -> {
+				transferService.createTransfer(transferRequest);
+			});
+
+		}
+
+	}
+
+	@Test
+	public void getTransfer() {
+
+		// Arrange
+		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
+			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.com");
+			ManageFoundsDTO foundRequest = new ManageFoundsDTO(userSend.getId(), 500);
+			walletService.addFounds(foundRequest);
+			TransferRequest transferRequest = new TransferRequest(userReceive.getId(), 100);
+			TransferResponseDTO transfer = transferService.createTransfer(transferRequest);
+
+			// Act
+			Optional<TransferResponseDTO> transferOpt = transferService.getTransfer(transfer.getID());
+
+			// Assert
+			assertTrue(transferOpt.isPresent());
+			assertTrue(transferOpt.get().getAmount() == 100);
+			assertTrue(transferOpt.get().getUserSend().getId() == (userSend.getId()));
+			assertTrue(transferOpt.get().getUserReceive().getId() == (userReceive.getId()));
+		}
 	}
 
 }

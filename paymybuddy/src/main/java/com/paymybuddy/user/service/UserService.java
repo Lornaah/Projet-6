@@ -16,7 +16,7 @@ public interface UserService {
 
 	public String deleteUser(RegistrationRequest request);
 
-	public String updateProfileNamesByUserName(String userName, UpdateProfileDTO dtoRequest);
+	public Optional<User> updateProfileNamesByUserMailAddress(String userName, UpdateProfileDTO dtoRequest);
 
 	public Optional<User> getUser(UpdateRequest request);
 
@@ -24,7 +24,7 @@ public interface UserService {
 
 	public Optional<User> getUserByUserName(String name);
 
-	public String updatePasswordByUserName(String currentUserName, UpdatePasswordDTO updatePasswordDTO);
+	public Optional<User> updatePasswordByUserMailAddress(String currentUserName, UpdatePasswordDTO updatePasswordDTO);
 
 	public void disableAccountByUserName(String currentUserName);
 }

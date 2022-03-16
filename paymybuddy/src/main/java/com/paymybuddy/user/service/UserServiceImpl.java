@@ -79,13 +79,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public String updateProfileNamesByUserName(String userName, UpdateProfileDTO dtoRequest) {
-		Optional<User> actualUser = userRepository.findByMailAddress(userName);
-
-		System.err.println(dtoRequest.getNewFirstName());
+	public Optional<User> updateProfileNamesByUserMailAddress(String mailAddress, UpdateProfileDTO dtoRequest) {
+		Optional<User> actualUser = userRepository.findByMailAddress(mailAddress);
 
 		if (dtoRequest.getNewFirstName() == null || dtoRequest.getNewLastName() == null) {
-			return "User not updated, one of the username is null";
+			return Optional.empty();
 		}
 		if (!actualUser.get().getFirstName().equals(dtoRequest.getNewFirstName())) {
 			actualUser.get().setFirstName(dtoRequest.getNewFirstName());
@@ -95,27 +93,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			actualUser.get().setLastName(dtoRequest.getNewLastName());
 		}
 
-		userRepository.save(actualUser.get());
-		return "User updated";
+		return Optional.of(userRepository.save(actualUser.get()));
 	}
 
 	@Override
-	public String updatePasswordByUserName(String currentUserName, UpdatePasswordDTO updatePasswordDTO) {
+	public Optional<User> updatePasswordByUserMailAddress(String currentUserMailAddress,
+			UpdatePasswordDTO updatePasswordDTO) {
 
 		if (updatePasswordDTO.getOldPassword() == null || updatePasswordDTO.getNewPassword() == null) {
-			return "User not updated, one of the password is null";
+			System.err.println("1");
+			return Optional.empty();
 		}
-		Optional<User> currentUser = userRepository.findByMailAddress(currentUserName);
+		Optional<User> currentUser = userRepository.findByMailAddress(currentUserMailAddress);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		String oldPasswordCrypted = encoder.encode(updatePasswordDTO.getOldPassword());
 
 		if (encoder.matches(updatePasswordDTO.getOldPassword(), currentUser.get().getPassword())) {
+			System.err.println("2");
 			currentUser.get().setPassword(encoder.encode(updatePasswordDTO.getNewPassword()));
-			userRepository.save(currentUser.get());
-			return "Password Changed";
+
+			return Optional.of(userRepository.save(currentUser.get()));
 		}
-		return "Wrong Password, try again";
+		System.err.println("3");
+		return Optional.empty();
 	}
 
 	@Override

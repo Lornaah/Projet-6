@@ -51,7 +51,8 @@ public class UserController {
 	public void changeName(@ModelAttribute("nameInfos") @Valid UpdateProfileDTO updateProfileDTO,
 			HttpServletRequest request, HttpServletResponse response, Model model, Errors errors) throws IOException {
 		String currentUserName = SecurityService.getCurrentUserName();
-		model.addAttribute("newProfile", userService.updateProfileNamesByUserName(currentUserName, updateProfileDTO));
+		model.addAttribute("newProfile",
+				userService.updateProfileNamesByUserMailAddress(currentUserName, updateProfileDTO));
 		response.sendRedirect("/profile");
 	}
 
@@ -59,7 +60,8 @@ public class UserController {
 	public void changePassword(@ModelAttribute("updatePasswordDTO") @Valid UpdatePasswordDTO updatePasswordDTO,
 			HttpServletRequest request, HttpServletResponse response, Model model, Errors errors) throws IOException {
 		String currentUserName = SecurityService.getCurrentUserName();
-		model.addAttribute("newPassword", userService.updatePasswordByUserName(currentUserName, updatePasswordDTO));
+		model.addAttribute("newPassword",
+				userService.updatePasswordByUserMailAddress(currentUserName, updatePasswordDTO));
 		response.sendRedirect("/profile");
 	}
 

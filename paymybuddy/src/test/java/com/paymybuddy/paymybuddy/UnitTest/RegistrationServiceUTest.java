@@ -1,4 +1,4 @@
-package com.paymybuddy.paymybuddy;
+package com.paymybuddy.paymybuddy.UnitTest;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,13 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.paymybuddy.paymybuddy.ClearDB;
 import com.paymybuddy.registration.RegistrationRequest;
 import com.paymybuddy.registration.RegistrationService;
 import com.paymybuddy.user.repository.UserRepository;
 import com.paymybuddy.user.service.UserService;
 
 @SpringBootTest
-public class RegistrationServiceTest {
+public class RegistrationServiceUTest {
 
 	@Autowired
 	private UserService userService;

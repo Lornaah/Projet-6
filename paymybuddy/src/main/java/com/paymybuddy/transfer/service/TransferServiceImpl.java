@@ -86,27 +86,6 @@ public class TransferServiceImpl implements TransferService {
 		return Optional.of(new TransferResponseDTO(transferRepository.findById(ID).get()));
 	}
 
-//	@Override
-//	public List<CurrentUserTransferDTO> getAllTransfers(String currentUserName) {
-//		Optional<User> currentUser = userService.getUserByUserName(currentUserName);
-//		if (currentUser.isEmpty())
-//			return new ArrayList<>();
-//
-//		int currentID = currentUser.get().getId();
-//
-//		List<Transfer> findByUser_Receive_IDOrUser_Send_ID = transferRepository
-//				.findByUserReceive_idOrUserSend_id(currentID, currentID);
-//
-//		List<CurrentUserTransferDTO> currentUserTransferList = new ArrayList<>();
-//
-//		findByUser_Receive_IDOrUser_Send_ID.forEach(t -> {
-//			CurrentUserTransferDTO currentUserTransferDTO = new CurrentUserTransferDTO(t);
-//			currentUserTransferList.add(currentUserTransferDTO);
-//		});
-//
-//		return currentUserTransferList;
-//	}
-
 	@Override
 	public Page<CurrentUserTransferDTO> getTransfersPaginated(int pageNum, int pageSize) {
 		Pageable pageable = PageRequest.of((pageNum - 1), pageSize, Sort.by("date").descending());
