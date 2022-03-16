@@ -21,6 +21,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 		User user = new User(request.getMailAddress(), request.getPassword(), request.getFirstName(),
 				request.getLastName());
 
+		if (userService.alreadyRegistered(user.getMailAddress())) {
+			throw new IllegalStateException("User already exists");
+		}
+
 		user.setWallet(walletService.createWallet(user));
 
 		return userService.createUser(user);

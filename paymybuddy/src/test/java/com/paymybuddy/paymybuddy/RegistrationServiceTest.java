@@ -18,24 +18,26 @@ public class RegistrationServiceTest {
 
 	@Autowired
 	private UserService userService;
+
 	@Autowired
 	private UserRepository userRepository;
+
 	@Autowired
 	private RegistrationService registrationService;
 
+	@Autowired
+	ClearDB clearDB;
+
 	@BeforeEach
 	public void clearDB() {
-		userRepository.findAll().forEach(u -> {
-			userRepository.delete(u);
-		});
-		;
+		clearDB.clearDB();
 	}
 
 	@Test
 	public void registerUser() {
 
 		// Arrange
-		RegistrationRequest request = new RegistrationRequest("test@mail", "test", "test", "test");
+		RegistrationRequest request = new RegistrationRequest("Test@mail.com", "TestTest123!", "Test", "Test");
 
 		// Act
 		registrationService.registerUser(request);
@@ -48,7 +50,7 @@ public class RegistrationServiceTest {
 	public void alreadyRegistered() {
 
 		// Arrange
-		RegistrationRequest request = new RegistrationRequest("test@mail", "test", "test", "test");
+		RegistrationRequest request = new RegistrationRequest("Test@mail.com", "TestTest123!", "Test", "Test");
 		registrationService.registerUser(request);
 
 		// Act

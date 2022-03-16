@@ -1,4 +1,4 @@
-package com.paymybuddy.paymybuddy;
+package com.paymybuddy.paymybuddy.UnitTest;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.paymybuddy.paymybuddy.ClearDB;
 import com.paymybuddy.registration.RegistrationRequest;
 import com.paymybuddy.user.models.User;
 import com.paymybuddy.user.repository.UserRepository;
@@ -17,19 +18,18 @@ import com.paymybuddy.user.service.UserService;
 import com.paymybuddy.user.updateDTO.UpdateRequest;
 
 @SpringBootTest
-public class UserServiceTest {
+public class UserServiceUTest {
 
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	ClearDB clearDB;
 
 	@BeforeEach
 	public void clearDB() {
-		userRepository.findAll().forEach(u -> {
-			userRepository.delete(u);
-		});
-		;
+		clearDB.clearDB();
 	}
 
 	@Test

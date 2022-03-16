@@ -1,5 +1,7 @@
 package com.paymybuddy.user.models;
 
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -114,6 +116,23 @@ public class User {
 
 	public void setWallet(Wallet wallet) {
 		this.wallet = wallet;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, mailAddress);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return id == other.id && Objects.equals(mailAddress, other.mailAddress);
 	}
 
 }
