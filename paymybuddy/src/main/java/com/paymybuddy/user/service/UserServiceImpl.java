@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			UpdatePasswordDTO updatePasswordDTO) {
 
 		if (updatePasswordDTO.getOldPassword() == null || updatePasswordDTO.getNewPassword() == null) {
-			System.err.println("1");
+
 			return Optional.empty();
 		}
 		Optional<User> currentUser = userRepository.findByMailAddress(currentUserMailAddress);
@@ -110,20 +110,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		String oldPasswordCrypted = encoder.encode(updatePasswordDTO.getOldPassword());
 
 		if (encoder.matches(updatePasswordDTO.getOldPassword(), currentUser.get().getPassword())) {
-			System.err.println("2");
 			currentUser.get().setPassword(encoder.encode(updatePasswordDTO.getNewPassword()));
 
 			return Optional.of(userRepository.save(currentUser.get()));
 		}
-		System.err.println("3");
 		return Optional.empty();
 	}
 
 	@Override
-	public void disableAccountByUserName(String currentUserName) {
+	public User disableAccountByUserName(String currentUserName) {
 		User currentUser = getUserByUserName(currentUserName).get();
 		currentUser.setActive(false);
-		userRepository.save(currentUser);
+		return userRepository.save(currentUser);
 	}
 
 }

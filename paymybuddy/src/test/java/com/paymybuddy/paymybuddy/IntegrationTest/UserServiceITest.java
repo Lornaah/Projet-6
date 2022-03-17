@@ -92,4 +92,18 @@ public class UserServiceITest {
 		}
 	}
 
+	@Test
+	public void disableAccount() {
+		// Arrange
+		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
+			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.fr");
+
+			// Act
+			userCurrent = userService.disableAccountByUserName(userCurrent.getMailAddress());
+
+			// Assert
+			assertTrue(!userCurrent.isActive());
+		}
+	}
+
 }

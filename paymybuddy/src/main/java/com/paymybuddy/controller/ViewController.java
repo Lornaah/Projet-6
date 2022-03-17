@@ -41,7 +41,6 @@ public class ViewController {
 
 	private void fillTransferModel(Model model) {
 		String currentUserName = SecurityService.getCurrentUserName();
-//		model.addAttribute("transferList", transferService.getAllTransfers(currentUserName));
 		model.addAttribute("wallet", userService.getUserByUserName(currentUserName).get().getWallet().getFounds());
 		model.addAttribute("connectionMail", new ConnectionDTO());
 		model.addAttribute("newTransfer", new TransferRequest());

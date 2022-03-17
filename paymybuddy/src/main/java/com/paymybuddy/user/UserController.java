@@ -24,12 +24,16 @@ import com.paymybuddy.user.service.UserService;
 import com.paymybuddy.user.updateDTO.UpdatePasswordDTO;
 import com.paymybuddy.user.updateDTO.UpdateProfileDTO;
 import com.paymybuddy.user.updateDTO.UpdateRequest;
+import com.paymybuddy.validation.ValidationService;
 
 @Controller
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	ValidationService validationService;
 
 	@DeleteMapping("/deleteAccount")
 	@ResponseStatus(code = HttpStatus.OK)
@@ -51,8 +55,11 @@ public class UserController {
 	public void changeName(@ModelAttribute("nameInfos") @Valid UpdateProfileDTO updateProfileDTO,
 			HttpServletRequest request, HttpServletResponse response, Model model, Errors errors) throws IOException {
 		String currentUserName = SecurityService.getCurrentUserName();
-		model.addAttribute("newProfile",
-				userService.updateProfileNamesByUserMailAddress(currentUserName, updateProfileDTO));
+		if (validationService.isNameValid(updateProfileDTO.getNewFirstName())
+				&& validationService.isNameValid(updateProfileDTO.getNewLastName())) {
+			model.addAttribute("newProfile",
+					userService.updateProfileNamesByUserMailAddress(currentUserName, updateProfileDTO));
+		}
 		response.sendRedirect("/profile");
 	}
 
@@ -60,8 +67,11 @@ public class UserController {
 	public void changePassword(@ModelAttribute("updatePasswordDTO") @Valid UpdatePasswordDTO updatePasswordDTO,
 			HttpServletRequest request, HttpServletResponse response, Model model, Errors errors) throws IOException {
 		String currentUserName = SecurityService.getCurrentUserName();
-		model.addAttribute("newPassword",
-				userService.updatePasswordByUserMailAddress(currentUserName, updatePasswordDTO));
+		if (validationService.isPasswordValide(updatePasswordDTO.getOldPassword())
+				&& validationService.isPasswordValide(updatePasswordDTO.getNewPassword())) {
+			model.addAttribute("newPassword",
+					userService.updatePasswordByUserMailAddress(currentUserName, updatePasswordDTO));
+		}
 		response.sendRedirect("/profile");
 	}
 

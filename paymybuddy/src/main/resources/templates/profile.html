@@ -57,12 +57,13 @@
                     <div class="container-fluid px-4 ">
                         <div class="row justify-content-between g-4 section2 bg-light">
                             <div class="col-6 col-sm-6">
-                            
+
                                 <form th:action="@{/changeName}" th:object="${nameInfos}" method="post" id="nameForm">
-                                
+
                                     <div class="form-floating mb-3 form-select-lg text-center fs-4">
-                                        <input type="text"  name="newFirstName" th:field="*{newFirstName}" class="name form-control fs-5"
-                                            id="floatingInputFirstname" readonly th:value="${newFirstName}" placeholder="Name"
+                                        <input type="text" name="newFirstName" th:field="*{newFirstName}"
+                                            class="name form-control fs-5" id="floatingInputFirstname" readonly required
+                                            th:value="${newFirstName}" placeholder="Name"
                                             pattern="^[A-Z](([A-Za-z])*|(-|'|[Ä-ÿ]|\s))*$"
                                             title="Must begins by one uppercase and be followed by at least one lowercase">
                                         <label class="inputLabel" for="floatingInputFirstname">First Name</label>
@@ -101,23 +102,29 @@
                     <div class="container-fluid px-4 ">
                         <div class="row justify-content-between g-4 section2 bg-light">
                             <div class="col-6 col-sm-6">
-                            
+
                                 <form id="passwordForm" th:action="@{/changePassword}" th:object="${updatePasswordDTO}"
                                     method="post">
                                     <div class="form-floating mb-3 form-select-lg text-center fs-4">
                                         <input name="oldPassword" type="password"
+                                            pattern="^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,})\S$"
+                                            title="Must contains at least : one lowercase, one uppercase, one number, one special character (&!?$...)"
                                             class="form-control password fs-5" id="floatingOldPassword" readonly
-                                            placeholder="Password" th:value="${oldPassword}" th:field="*{oldPassword}">
+                                            required placeholder="Password" th:value="${oldPassword}"
+                                            th:field="*{oldPassword}">
                                         <label class="inputLabel" for="floatingOldPassword">Old Password</label>
                                     </div>
                                     <div class="form-floating form-select-lg text-center fs-4">
                                         <input name="newPassword" type="password"
+                                            pattern="^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,})\S$"
+                                            title="Must contains at least : one lowercase, one uppercase, one number, one special character (&!?$...)"
                                             class="form-control password fs-5" id="floatingNewPassword" readonly
-                                            placeholder="Password" th:value="${newPassword}" th:field="*{newPassword}">
+                                            required placeholder="Password" th:value="${newPassword}"
+                                            th:field="*{newPassword}">
                                         <label class="inputLabel" for="floatingNewPassword">New Password</label>
                                     </div>
                                 </form>
-                                
+
                             </div>
                             <div class=" d-grid gap-2 col-3 col-sm-3 mx-auto center align-items-center">
                                 <button id="passwordButton" class="btn btn-primary btn-lg btn-validate" type="button"
@@ -196,24 +203,24 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class=" modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            
-            <form th:action="@{/disableAccount}" method="get" id="disableAccount">
-                <div class="modal-header">
-                    <h5 class="modal-title display-6 fs-4" id="exampleModalLabel">Disable
-                        account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="display-6 fs-4">Are you sure to disable your account ?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-lg btn-primary" data-bs-dismiss="modal">Yes</button>
-                </div>
-                 </form>
-                 
+
+                <form th:action="@{/disableAccount}" method="get" id="disableAccount">
+                    <div class="modal-header">
+                        <h5 class="modal-title display-6 fs-4" id="exampleModalLabel">Disable
+                            account</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="display-6 fs-4">Are you sure to disable your account ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-lg btn-primary" data-bs-dismiss="modal">Yes</button>
+                    </div>
+                </form>
+
             </div>
-           
+
         </div>
     </div>
 

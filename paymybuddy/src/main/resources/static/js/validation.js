@@ -1,18 +1,14 @@
-function toggle(className) {
-    document.querySelectorAll(className).forEach(element => element.readOnly = !element.readOnly);
-}
+var inputClassName;
 
-function clearInput(className) {
+function toggle(className) {
     document.querySelectorAll(className).forEach(element => {
-        if (!element.readOnly) {
-            element.value = "";
-        }
+        if (element.readOnly) element.readOnly = false
     });
 }
 
 function toggleAndClearInput(className) {
     toggle(className);
-    clearInput(className);
+    inputClassName = className;
 }
 
 var buttons = document.querySelectorAll('.btn-validate');
@@ -30,9 +26,14 @@ Array.from(buttons).forEach(btn => {
             }
         }
 
-        btn.innerText = btn.innerText === "Change" ? "Validate" : "Change";
-        btn.style.background = btn.innerText === "Change" ? "rgb(92, 185, 92)" : "rgb(0, 118, 217)";
         if (btn.innerText === "Change") {
+            btn.innerText = "Validate";
+            btn.style.background = "rgb(0, 118, 217)";
+            document.querySelectorAll(inputClassName).forEach(element => {
+                element.value = "";
+            });
+        }
+        else if (btn.innerText === "Validate") {
             var myModal = new bootstrap.Modal(document.getElementById("confirmModal"));
             myModal.toggle();
         }
@@ -42,6 +43,9 @@ Array.from(buttons).forEach(btn => {
 var confirmChange = document.getElementById("confirmChange");
 confirmChange.addEventListener("click", function (event) {
     var form = document.getElementById(currentForm);
-    console.log(form);
+
     form.requestSubmit();
 });
+
+document.getElementById("floatingOldPassword").value = "password";
+document.getElementById("floatingNewPassword").value = "password";

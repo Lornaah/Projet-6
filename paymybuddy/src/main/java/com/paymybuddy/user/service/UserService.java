@@ -26,5 +26,5 @@ public interface UserService {
 
 	public Optional<User> updatePasswordByUserMailAddress(String currentUserName, UpdatePasswordDTO updatePasswordDTO);
 
-	public void disableAccountByUserName(String currentUserName);
+	public User disableAccountByUserName(String currentUserName);
 }
