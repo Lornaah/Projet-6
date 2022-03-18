@@ -59,7 +59,7 @@ public class UserServiceITest {
 	public void updateProfileNamesByUserNameTest() {
 		// Arrange
 		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
-			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.fr");
+			security.when(SecurityService::getCurrentUserMailAddress).thenReturn("Test@mail.fr");
 			UpdateProfileDTO updateProfileDTO = new UpdateProfileDTO("NewFirstName", "NewLastName");
 
 			// Act
@@ -79,7 +79,7 @@ public class UserServiceITest {
 	public void updatePasswordByUserMailAddressTest() {
 		// Arrange
 		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
-			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.fr");
+			security.when(SecurityService::getCurrentUserMailAddress).thenReturn("Test@mail.fr");
 			UpdatePasswordDTO updatePasswordDTO = new UpdatePasswordDTO(USER_PASSWORD, "NewPassword123!");
 
 			// Act
@@ -96,7 +96,7 @@ public class UserServiceITest {
 	public void disableAccount() {
 		// Arrange
 		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
-			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.fr");
+			security.when(SecurityService::getCurrentUserMailAddress).thenReturn("Test@mail.fr");
 
 			// Act
 			userCurrent = userService.disableAccountByUserName(userCurrent.getMailAddress());

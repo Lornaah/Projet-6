@@ -58,7 +58,7 @@ public class ConnectionServiceITest {
 	public void addConnection() {
 		// Arrange
 		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
-			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.fr");
+			security.when(SecurityService::getCurrentUserMailAddress).thenReturn("Test@mail.fr");
 			ConnectionDTO connectionDTO = new ConnectionDTO(userToConnectWith.getMailAddress());
 
 			// Act

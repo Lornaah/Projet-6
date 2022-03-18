@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,12 +37,14 @@ public class TransferServiceImpl implements TransferService {
 	@Autowired
 	private WalletService walletService;
 
-	@Override
-	public TransferResponseDTO createTransfer(TransferRequest transferRequest) {
-		String currentUserName = SecurityService.getCurrentUserName();
+	@Autowired
+	private SecurityService securityService;
 
+	@Override
+	@Transactional
+	public TransferResponseDTO createTransfer(TransferRequest transferRequest) {
+		Optional<User> userSend = Optional.of(securityService.getCurrentUserByUserMailAddress());
 		Optional<User> userReceive = userService.getUserByID(transferRequest.getUserReceiveID());
-		Optional<User> userSend = userService.getUserByUserName(currentUserName);
 
 		if (userReceive.isEmpty() || (userSend.isEmpty())) {
 			throw new IllegalStateException("One of the user doesn't exist");
@@ -79,17 +83,9 @@ public class TransferServiceImpl implements TransferService {
 	}
 
 	@Override
-	public Optional<TransferResponseDTO> getTransfer(int ID) {
-		if (transferRepository.findById(ID).isEmpty()) {
-			return Optional.empty();
-		}
-		return Optional.of(new TransferResponseDTO(transferRepository.findById(ID).get()));
-	}
-
-	@Override
 	public Page<CurrentUserTransferDTO> getTransfersPaginated(int pageNum, int pageSize) {
 		Pageable pageable = PageRequest.of((pageNum - 1), pageSize, Sort.by("date").descending());
-		String userName = SecurityService.getCurrentUserName();
+		String userName = SecurityService.getCurrentUserMailAddress();
 		Optional<User> currentUser = userService.getUserByUserName(userName);
 		if (currentUser.isEmpty())
 			return new PageImpl<>(new ArrayList<>());

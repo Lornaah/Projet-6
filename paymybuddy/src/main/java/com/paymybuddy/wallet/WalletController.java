@@ -13,7 +13,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,24 +36,12 @@ public class WalletController {
 		return walletService.getFounds(userID);
 	}
 
-	@PutMapping("/addFounds")
-	@ResponseStatus(code = HttpStatus.OK)
-	public float addFounds(@RequestBody ManageFoundsDTO manageFoundsDTO) {
-		return walletService.addFounds(manageFoundsDTO);
-	}
-
-	@PutMapping("/removeFounds")
-	@ResponseStatus(code = HttpStatus.OK)
-	public float removeFounds(@RequestBody ManageFoundsDTO manageFoundsDTO) {
-		return walletService.removeFounds(manageFoundsDTO);
-	}
-
 	@PostMapping("/addFounds")
 	@ResponseStatus(code = HttpStatus.OK)
 	public void addFounds(@ModelAttribute("money") @Valid ManageFoundsDTO manageFoundsDTO, HttpServletRequest request,
 			Errors errors, HttpServletResponse response) throws IOException {
 
-		String currentUserName = SecurityService.getCurrentUserName();
+		String currentUserName = SecurityService.getCurrentUserMailAddress();
 		Optional<User> user = userService.getUserByUserName(currentUserName);
 		manageFoundsDTO.setUserID(user.get().getId());
 		walletService.addFounds(manageFoundsDTO);

@@ -35,12 +35,11 @@ public class ViewController {
 
 	@GetMapping("/transfer")
 	public String transfer(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-
 		return findPaginated(1, model, request, response);
 	}
 
 	private void fillTransferModel(Model model) {
-		String currentUserName = SecurityService.getCurrentUserName();
+		String currentUserName = SecurityService.getCurrentUserMailAddress();
 		model.addAttribute("wallet", userService.getUserByUserName(currentUserName).get().getWallet().getFounds());
 		model.addAttribute("connectionMail", new ConnectionDTO());
 		model.addAttribute("newTransfer", new TransferRequest());
@@ -59,7 +58,7 @@ public class ViewController {
 
 	@GetMapping("/profile")
 	public String profile(Model model) {
-		String currentUserName = SecurityService.getCurrentUserName();
+		String currentUserName = SecurityService.getCurrentUserMailAddress();
 		User user = userService.getUserByUserName(currentUserName).get();
 		UpdateProfileDTO updateProfileDTO = new UpdateProfileDTO(user.getFirstName(), user.getLastName());
 		model.addAttribute("nameInfos", updateProfileDTO);

@@ -3,16 +3,11 @@ package com.paymybuddy.validation;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.paymybuddy.user.service.UserService;
 
 @Service
 public class ValidationService {
 
-	@Autowired
-	UserService userService;
 	private Pattern pattern;
 	private Matcher matcher;
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@"
@@ -25,7 +20,7 @@ public class ValidationService {
 	// Email
 	public boolean isEmailValid(String email) {
 
-		if (email == null || userService.alreadyRegistered(email) || !emailValidator(email)) {
+		if (email == null || !emailValidator(email)) {
 			return false;
 		}
 		return true;

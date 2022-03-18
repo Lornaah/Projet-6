@@ -6,23 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.registration.RegistrationRequest;
+import com.paymybuddy.security.SecurityService;
 import com.paymybuddy.security.model.UserDetailsImpl;
 import com.paymybuddy.user.models.User;
 import com.paymybuddy.user.repository.UserRepository;
 import com.paymybuddy.user.updateDTO.UpdatePasswordDTO;
 import com.paymybuddy.user.updateDTO.UpdateProfileDTO;
-import com.paymybuddy.user.updateDTO.UpdateRequest;
 
 @Service("userService")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	SecurityService securityService;
 
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -40,10 +41,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public boolean alreadyRegistered(String mailAddress) {
-		if (userRepository.findByMailAddress(mailAddress).isPresent()) {
-			return true;
-		}
-		return false;
+		return userRepository.findByMailAddress(mailAddress).isPresent();
 	}
 
 	@Override
@@ -55,17 +53,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		}
 		return "User doesn't exist";
 
-	}
-
-	@Override
-	public Optional<User> getUser(UpdateRequest request) {
-
-		Optional<User> userOpt = userRepository.findByMailAddress(request.getMailAddress());
-		if (userOpt.isPresent() && (userOpt.get().getPassword().equals(request.getPassword()))) {
-			return userOpt;
-		}
-
-		return Optional.empty();
 	}
 
 	public Optional<User> getUserByID(int ID) {
@@ -99,19 +86,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Override
 	public Optional<User> updatePasswordByUserMailAddress(String currentUserMailAddress,
 			UpdatePasswordDTO updatePasswordDTO) {
-
 		if (updatePasswordDTO.getOldPassword() == null || updatePasswordDTO.getNewPassword() == null) {
-
 			return Optional.empty();
 		}
 		Optional<User> currentUser = userRepository.findByMailAddress(currentUserMailAddress);
-		PasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		String oldPasswordCrypted = encoder.encode(updatePasswordDTO.getOldPassword());
-
-		if (encoder.matches(updatePasswordDTO.getOldPassword(), currentUser.get().getPassword())) {
-			currentUser.get().setPassword(encoder.encode(updatePasswordDTO.getNewPassword()));
-
+		if (securityService.matches(updatePasswordDTO.getOldPassword(), currentUser.get().getPassword())) {
+			currentUser.get().setPassword(securityService.getEncryptedPassword(updatePasswordDTO.getNewPassword()));
 			return Optional.of(userRepository.save(currentUser.get()));
 		}
 		return Optional.empty();

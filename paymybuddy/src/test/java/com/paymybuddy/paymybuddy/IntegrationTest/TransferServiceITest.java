@@ -3,8 +3,6 @@ package com.paymybuddy.paymybuddy.IntegrationTest;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -67,7 +65,7 @@ public class TransferServiceITest {
 
 		// Arrange
 		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
-			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.com");
+			security.when(SecurityService::getCurrentUserMailAddress).thenReturn("Test@mail.com");
 			ManageFoundsDTO foundRequest = new ManageFoundsDTO(userSend.getId(), 500);
 			walletService.addFounds(foundRequest);
 
@@ -86,7 +84,7 @@ public class TransferServiceITest {
 
 		// Arrange
 		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
-			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.com");
+			security.when(SecurityService::getCurrentUserMailAddress).thenReturn("Test@mail.com");
 			ManageFoundsDTO foundRequest = new ManageFoundsDTO(userSend.getId(), 100);
 			walletService.addFounds(foundRequest);
 
@@ -97,31 +95,6 @@ public class TransferServiceITest {
 			assertThrows(IllegalStateException.class, () -> {
 				transferService.createTransfer(transferRequest);
 			});
-
-		}
-
-	}
-
-	@Test
-	public void getTransfer() {
-
-		// Arrange
-		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
-			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.com");
-			ManageFoundsDTO foundRequest = new ManageFoundsDTO(userSend.getId(), 500);
-			walletService.addFounds(foundRequest);
-			TransferRequest transferRequest = new TransferRequest(userReceive.getId(), 100);
-			TransferResponseDTO transfer = transferService.createTransfer(transferRequest);
-
-			// Act
-			Optional<TransferResponseDTO> transferOpt = transferService.getTransfer(transfer.getID());
-
-			// Assert
-			assertTrue(transferOpt.isPresent());
-			assertTrue(transferOpt.get().getAmount() == 100);
-			assertTrue(transferOpt.get().getUserSend().getId() == (userSend.getId()));
-			assertTrue(transferOpt.get().getUserReceive().getId() == (userReceive.getId()));
 		}
 	}
-
 }

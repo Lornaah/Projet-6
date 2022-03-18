@@ -24,10 +24,12 @@ public class ConnectionServiceImpl implements ConnectionService {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private SecurityService securityService;
+
 	@Override
 	public String newConnection(ConnectionDTO connectionMail) {
-		String currentUserName = SecurityService.getCurrentUserName();
-		User currentUser = userService.getUserByUserName(currentUserName).get();
+		User currentUser = securityService.getCurrentUserByUserMailAddress();
 
 		Optional<User> connectedUser = userService.getUserByUserName(connectionMail.getMail());
 
@@ -36,15 +38,15 @@ public class ConnectionServiceImpl implements ConnectionService {
 
 		boolean isAlreadyConnected = false;
 
-		for (int i = 0; i < connectionList.size(); i++) {
-			Connection c = connectionList.get(i);
+		for (Connection c : connectionList) {
 			if (c.getUser1().equals(connectedUser.get()) || c.getUser2().equals(connectedUser.get())) {
 				isAlreadyConnected = true;
 				break;
 			}
 		}
 
-		if (currentUserName.equals(connectionMail.getMail()) || (connectedUser.isEmpty()) || isAlreadyConnected) {
+		if (currentUser.getMailAddress().equals(connectionMail.getMail()) || (connectedUser.isEmpty())
+				|| isAlreadyConnected) {
 			return "Error";
 		} else {
 			Connection connection = new Connection(currentUser, connectedUser.get());
@@ -55,14 +57,14 @@ public class ConnectionServiceImpl implements ConnectionService {
 
 	@Override
 	public List<CurrentConnectionDTO> getAllConnection() {
-		String currentUserName = SecurityService.getCurrentUserName();
+		String currentUserName = SecurityService.getCurrentUserMailAddress();
 		User currentUser = userService.getUserByUserName(currentUserName).get();
 		List<Connection> connectionList = connectionRepository.findByUser1_idOrUser2_id(currentUser.getId(),
 				currentUser.getId());
 		List<CurrentConnectionDTO> currentConnectionDTOList = new ArrayList<>();
 		connectionList.forEach(c -> {
 			CurrentConnectionDTO currentConnectionDTO;
-			if (c.getUser1().getId() == currentUser.getId()) {
+			if (c.getUser1().equals(currentUser)) {
 				currentConnectionDTO = new CurrentConnectionDTO(c.getUser2());
 			} else {
 				currentConnectionDTO = new CurrentConnectionDTO(c.getUser1());

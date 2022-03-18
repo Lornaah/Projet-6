@@ -42,7 +42,7 @@ public class RegistrationServiceITest {
 	public void newUser() {
 		// Arrange
 		try (MockedStatic<SecurityService> security = Mockito.mockStatic(SecurityService.class)) {
-			security.when(SecurityService::getCurrentUserName).thenReturn("Test@mail.com");
+			security.when(SecurityService::getCurrentUserMailAddress).thenReturn("Test@mail.com");
 			RegistrationRequest request = new RegistrationRequest("Test@mail.com", "Test123Test!", "Test", "TestTest");
 
 			// Act

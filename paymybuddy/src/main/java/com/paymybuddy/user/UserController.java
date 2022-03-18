@@ -23,7 +23,6 @@ import com.paymybuddy.security.SecurityService;
 import com.paymybuddy.user.service.UserService;
 import com.paymybuddy.user.updateDTO.UpdatePasswordDTO;
 import com.paymybuddy.user.updateDTO.UpdateProfileDTO;
-import com.paymybuddy.user.updateDTO.UpdateRequest;
 import com.paymybuddy.validation.ValidationService;
 
 @Controller
@@ -41,20 +40,10 @@ public class UserController {
 		return userService.deleteUser(request);
 	}
 
-	@GetMapping("/myAccount")
-	@ResponseStatus(code = HttpStatus.OK)
-	public String getAccount(@RequestBody UpdateRequest request) {
-
-		if (userService.getUser(request).isPresent()) {
-			return (userService.getUser(request).get().toString());
-		}
-		return "User doesn't exist or password is incorrect";
-	}
-
 	@PostMapping("/changeName")
 	public void changeName(@ModelAttribute("nameInfos") @Valid UpdateProfileDTO updateProfileDTO,
 			HttpServletRequest request, HttpServletResponse response, Model model, Errors errors) throws IOException {
-		String currentUserName = SecurityService.getCurrentUserName();
+		String currentUserName = SecurityService.getCurrentUserMailAddress();
 		if (validationService.isNameValid(updateProfileDTO.getNewFirstName())
 				&& validationService.isNameValid(updateProfileDTO.getNewLastName())) {
 			model.addAttribute("newProfile",
@@ -66,7 +55,7 @@ public class UserController {
 	@PostMapping("/changePassword")
 	public void changePassword(@ModelAttribute("updatePasswordDTO") @Valid UpdatePasswordDTO updatePasswordDTO,
 			HttpServletRequest request, HttpServletResponse response, Model model, Errors errors) throws IOException {
-		String currentUserName = SecurityService.getCurrentUserName();
+		String currentUserName = SecurityService.getCurrentUserMailAddress();
 		if (validationService.isPasswordValide(updatePasswordDTO.getOldPassword())
 				&& validationService.isPasswordValide(updatePasswordDTO.getNewPassword())) {
 			model.addAttribute("newPassword",
@@ -77,7 +66,7 @@ public class UserController {
 
 	@GetMapping("/disableAccount")
 	public String disableAccount() {
-		String currentUserName = SecurityService.getCurrentUserName();
+		String currentUserName = SecurityService.getCurrentUserMailAddress();
 		userService.disableAccountByUserName(currentUserName);
 		return "disconnected";
 	}
