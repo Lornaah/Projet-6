@@ -1,5 +1,7 @@
 package com.paymybuddy.message.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ public class MessageServiceImpl implements MessageService {
 	MessageRepository messageRepository;
 
 	@Override
+	@Transactional
 	public String addMessage(Message message) {
 
 		messageRepository.save(message);

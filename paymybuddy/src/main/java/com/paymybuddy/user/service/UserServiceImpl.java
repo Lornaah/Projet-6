@@ -2,6 +2,8 @@ package com.paymybuddy.user.service;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,6 +37,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
+	@Transactional
 	public User createUser(User user) {
 		return userRepository.save(user);
 	}
@@ -45,6 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
+	@Transactional
 	public String deleteUser(RegistrationRequest request) {
 
 		if (alreadyRegistered(request.getMailAddress())) {
@@ -66,6 +70,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
+	@Transactional
 	public Optional<User> updateProfileNamesByUserMailAddress(String mailAddress, UpdateProfileDTO dtoRequest) {
 		Optional<User> actualUser = userRepository.findByMailAddress(mailAddress);
 
@@ -84,6 +89,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
+	@Transactional
 	public Optional<User> updatePasswordByUserMailAddress(String currentUserMailAddress,
 			UpdatePasswordDTO updatePasswordDTO) {
 		if (updatePasswordDTO.getOldPassword() == null || updatePasswordDTO.getNewPassword() == null) {
@@ -99,6 +105,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
+	@Transactional
 	public User disableAccountByUserName(String currentUserName) {
 		User currentUser = getUserByUserName(currentUserName).get();
 		currentUser.setActive(false);

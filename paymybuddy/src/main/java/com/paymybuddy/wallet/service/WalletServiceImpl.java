@@ -1,5 +1,7 @@
 package com.paymybuddy.wallet.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ public class WalletServiceImpl implements WalletService {
 	WalletRepository walletRepository;
 
 	@Override
+	@Transactional
 	public Wallet createWallet(User user) {
 
 		Wallet wallet = new Wallet();
@@ -29,6 +32,7 @@ public class WalletServiceImpl implements WalletService {
 	}
 
 	@Override
+	@Transactional
 	public float addFounds(ManageFoundsDTO manageFoundsDTO) {
 		float oldFounds = walletRepository.getById(manageFoundsDTO.getUserID()).getFounds();
 		float newFounds = oldFounds + manageFoundsDTO.getAmount();
@@ -40,6 +44,7 @@ public class WalletServiceImpl implements WalletService {
 	}
 
 	@Override
+	@Transactional
 	public float removeFounds(ManageFoundsDTO manageFoundsDTO) {
 		float oldFounds = walletRepository.getById(manageFoundsDTO.getUserID()).getFounds();
 		float newFounds = oldFounds - manageFoundsDTO.getAmount();
