@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.paymybuddy.security.SecurityService;
+import com.paymybuddy.security.service.SecurityService;
 import com.paymybuddy.user.models.User;
 import com.paymybuddy.user.service.UserService;
 import com.paymybuddy.wallet.service.WalletService;

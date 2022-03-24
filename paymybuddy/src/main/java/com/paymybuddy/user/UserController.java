@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.paymybuddy.registration.RegistrationRequest;
-import com.paymybuddy.security.SecurityService;
+import com.paymybuddy.security.service.SecurityService;
 import com.paymybuddy.user.service.UserService;
 import com.paymybuddy.user.updateDTO.UpdatePasswordDTO;
 import com.paymybuddy.user.updateDTO.UpdateProfileDTO;

@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.paymybuddy.paymybuddy.ClearDB;
 import com.paymybuddy.registration.RegistrationRequest;
 import com.paymybuddy.registration.RegistrationService;
-import com.paymybuddy.security.SecurityService;
+import com.paymybuddy.security.service.SecurityService;
 import com.paymybuddy.transfer.repository.TransferRepository;
 import com.paymybuddy.transfer.service.TransferService;
 import com.paymybuddy.transfer.transferDTO.TransferRequest;

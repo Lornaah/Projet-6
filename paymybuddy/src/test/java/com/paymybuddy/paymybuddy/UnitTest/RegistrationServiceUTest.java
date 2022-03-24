@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.paymybuddy.paymybuddy.ClearDB;
 import com.paymybuddy.registration.RegistrationRequest;
 import com.paymybuddy.registration.RegistrationService;
-import com.paymybuddy.user.repository.UserRepository;
 import com.paymybuddy.user.service.UserService;
 
 @SpringBootTest
@@ -19,9 +18,6 @@ public class RegistrationServiceUTest {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private UserRepository userRepository;
 
 	@Autowired
 	private RegistrationService registrationService;

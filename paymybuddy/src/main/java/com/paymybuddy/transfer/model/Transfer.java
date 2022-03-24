@@ -87,7 +87,7 @@ public class Transfer {
 	}
 
 	private void computeTaxAmount() {
-		taxedAmount = amount * 1.05f;
+		taxedAmount = amount * 1.005f;
 	}
 
 	private void deposit() {

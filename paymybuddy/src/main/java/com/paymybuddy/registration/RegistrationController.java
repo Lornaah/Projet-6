@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.paymybuddy.security.SecurityService;
+import com.paymybuddy.security.service.SecurityService;
 import com.paymybuddy.validation.ValidationService;
 
 @RestController

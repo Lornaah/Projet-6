@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.paymybuddy.connection.connectionDTO.ConnectionDTO;
 import com.paymybuddy.connection.service.ConnectionService;
-import com.paymybuddy.security.SecurityService;
+import com.paymybuddy.security.service.SecurityService;
 import com.paymybuddy.transfer.service.TransferService;
 import com.paymybuddy.transfer.transferDTO.CurrentUserTransferDTO;
 import com.paymybuddy.transfer.transferDTO.TransferRequest;

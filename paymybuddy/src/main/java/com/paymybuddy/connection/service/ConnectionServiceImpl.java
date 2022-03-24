@@ -13,7 +13,7 @@ import com.paymybuddy.connection.connectionDTO.ConnectionDTO;
 import com.paymybuddy.connection.connectionDTO.CurrentConnectionDTO;
 import com.paymybuddy.connection.model.Connection;
 import com.paymybuddy.connection.repository.ConnectionRepository;
-import com.paymybuddy.security.SecurityService;
+import com.paymybuddy.security.service.SecurityService;
 import com.paymybuddy.user.models.User;
 import com.paymybuddy.user.service.UserService;
 

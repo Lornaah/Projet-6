@@ -14,7 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.paymybuddy.security.SecurityService;
+import com.paymybuddy.security.service.SecurityService;
 import com.paymybuddy.transfer.model.Transfer;
 import com.paymybuddy.transfer.repository.TransferRepository;
 import com.paymybuddy.transfer.transferDTO.CurrentUserTransferDTO;

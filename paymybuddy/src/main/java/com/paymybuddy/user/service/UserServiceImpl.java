@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.registration.RegistrationRequest;
-import com.paymybuddy.security.SecurityService;
 import com.paymybuddy.security.model.UserDetailsImpl;
+import com.paymybuddy.security.service.SecurityService;
 import com.paymybuddy.user.models.User;
 import com.paymybuddy.user.repository.UserRepository;
 import com.paymybuddy.user.updateDTO.UpdatePasswordDTO;

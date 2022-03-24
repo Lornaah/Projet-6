@@ -18,7 +18,7 @@ import com.paymybuddy.connection.service.ConnectionService;
 import com.paymybuddy.paymybuddy.ClearDB;
 import com.paymybuddy.registration.RegistrationRequest;
 import com.paymybuddy.registration.RegistrationService;
-import com.paymybuddy.security.SecurityService;
+import com.paymybuddy.security.service.SecurityService;
 import com.paymybuddy.user.models.User;
 import com.paymybuddy.user.service.UserService;
 
